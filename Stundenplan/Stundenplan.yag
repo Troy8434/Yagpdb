@@ -1,0 +1,633 @@
+{{/*Tageszähler*/}}
+{{$global := (toInt64 0)}}
+{{$key := "Day"}}
+{{$e := dbIncr $global $key +1}}
+
+{{$x := dbGet $global $key}}
+{{$xy := $x.Value}}
+{{if eq (toInt $xy) 15}}
+    {{dbSet $global $key 1}}
+{{end}}
+
+
+
+
+
+
+
+{{/*Embed*/}}
+{{$avatar := (joinStr "" "https://media.discordapp.net/attachments/861618411971543040/884804318480437328/afk.png?width=339&height=344")}}   
+{{$embed := cembed 
+ "title" "Stundenplansystem V2"
+ "description" "Klicke auf 1️⃣ um den Stundenplan für **heute** zu bekommen. \nKlicke auf 2️⃣ um den Stundenplan für **morgen** zu bekommen."
+ "color" 52 
+ "thumbnail" (sdict "url" $avatar)}}
+{{$x := sendMessageRetID nil $embed }}
+{{addMessageReactions nil $x "1️⃣" "2️⃣" }}
+
+
+
+
+
+
+
+{{/*Stundenplan Teil 1*/}}
+{{$global := (toInt64 0)}}
+{{$key2 := "Day"}}
+{{$tmrw := "morgen"}}
+{{$y := (dbGet $global $key2).Value}}
+{{$avatar := (joinStr "" "https://media.discordapp.net/attachments/861618411971543040/884804318480437328/afk.png?width=339&height=344")}}
+{{$x := "."}}
+
+{{$1 := "-"}}
+{{$2 := "-"}}
+{{$3 := "-"}}
+{{$4 := "-"}}
+{{$5 := "-"}}
+
+{{$ch1 := 870389660969472051}}
+{{$dt1 := 870389739663016016}}
+{{$dt2 := 870389772751892600}}
+{{$dt3 := 870389806084014170}}
+{{$spa1 := 870389926447964242}}
+{{$spa2 := 870389959624904804}}
+{{$spa3 := 870390016185085993}}
+{{$FrA := 870389874711232632}}
+{{$FrF := 870390064503472169}}
+{{$phy1 := 870390119994105917}}
+{{$phy2 := 881285133464928256}}
+{{$wl1 := 870390168887103528}}
+{{$wl3 := 881285444191539290}}
+{{$sp1 := 881285673749983283}}
+{{$sp2 := 881285701876973588}}
+{{$sp3 := 881285733992771624}}
+{{$sp4 := 881285760697913366}}
+{{$sp5 := 881285788879425616}}
+{{$spt := 881285821049757740}}
+{{$gk1 := 881286285866725448}}
+{{$gk3 := 881286314455089152}}
+{{$gk4 := 881286359581622312}}
+{{$DT := 881286852525555803}}
+{{$EN1 := 881286759823060993}}
+{{$EN2 := 881286794908426301}}
+{{$MA := 881286821374468148}}
+{{$ma1 := 881287119438479410}}
+{{$ma2 := 881287142767202316}}
+{{$ma3 := 881287167513620542}}
+{{$en1 := 881287398103855144}}
+{{$en2 := 881287427233312790}}
+{{$binf1 := 881288370158968842}}
+{{$binf2 := 881288404640342056}}
+{{$binf3 := 881288443836117062}}
+{{$binf4 := 881288466770579546}}
+{{$binf5 := 881288483291926528}}
+{{$lit1 := 881288502438928384}}
+{{$lit2 := 881288522399633489}}
+{{$ku1 := 881288541898944632}}
+{{$ku2 := 881288561930960966}}
+{{$ku3 := 881288582545960960}}
+{{$mus := 881288599922941953}}
+{{$phi1 := 881288620932231178}}
+{{$phi2 := 881288638363762709}}
+{{$rel1 := 881288655203860493}}
+{{$rel2 := 881288993843601409}}
+{{$EL := 881289013393235988}}
+{{$ET := 881289030514401351}}
+{{$bio1 := 881289049057415209}}
+{{$bio3 := 881289064022675466}}
+{{$erz2 := 881289079365451826}}
+{{$Ges2 := 881289097551937537}}
+{{$BWL := 881289434509754429}}
+{{$rL := 881289449768624130}}
+{{$vwl := 881289465040097340}}
+
+
+
+{{$action := .Reaction.Emoji.Name}}
+{{$validEmojis := cslice "1️⃣" "2️⃣"}}
+{{$isValid := false}}
+{{with and (eq .ReactionMessage.Author.ID 204255221017214977) .ReactionMessage.Embeds}}
+{{$embed := index . 0}} {{/*The first embed*/}}
+{{if eq $embed.Title "Stundenplansystem V2"}}
+{{$isValid = true}}
+{{end}}
+{{end}}
+{{ if and (in $validEmojis $action) $isValid}}
+{{deleteMessageReaction nil .ReactionMessage.ID .User.ID $action}}
+{{if eq $action "1️⃣"}}
+    {{$x = $y}}
+{{else if eq $action "2️⃣"}}
+    {{$x = add (toInt $y) 1}}
+{{end}}
+
+
+{{if $isValid}}
+{{if eq (toInt $x) 1}}
+{{if hasRoleID $ch1}}
+{{$1 = "Chemie"}}
+{{else if hasRoleID $Ges2}}
+{{$1 = "Gesundheit"}}
+{{else if hasRoleID $BWL}}
+{{$1 = "BWL"}}
+{{end}}
+{{if hasRoleID $dt1}}
+{{$2 = "Deutsch"}}
+{{else if hasRoleID $dt2}}
+{{$2 = "Deutsch"}}
+{{else if hasRoleID $dt3}}
+{{$2 = "Deutsch"}}
+{{end}}
+{{if hasRoleID $FrF}}
+{{$3 = "Französisch"}}
+{{else if hasRoleID $spa1}}
+{{$3 = "Spanisch"}}
+{{else if hasRoleID $spa2}}
+{{$3 = "Spanisch"}}
+{{else if hasRoleID $spa3}}
+{{$3 = "Spanisch"}}
+{{else if hasRoleID $FrA}}
+{{$3 = "Französisch"}}
+{{end}}
+{{if hasRoleID $phy1}}
+{{$4 = "Physik"}}
+{{else if hasRoleID $wl3}}
+{{$4 = "WL"}}
+{{else if hasRoleID $gk4}}
+{{$4 = "GK"}}
+{{end}}
+{{if hasRoleID $gk1}}
+{{$5 = "GK"}}
+{{else if hasRoleID $sp5}}
+{{$5 = "Ski"}}
+{{end}}
+{{$embed := cembed 
+"title" "Dein Stundenplan"
+"description" (joinStr "" "Montag | ungerade Woche \n\n1) " $1 "\n2) " $2 "\n3) " $3 "\n4) " $4 "\n5) " $5)
+"color" 52 
+"thumbnail" (sdict "url" $avatar)}}
+{{sendDM $embed}}
+
+{{else if eq (toInt $x) 2}}
+{{if hasRoleID $ET}}
+{{$1 = "ET"}}
+{{else if hasRoleID $Ges2}}
+{{$1 = "Gesundheit"}}
+{{else if hasRoleID $vwl}}
+{{$1 = "VWL"}}
+{{else if hasRoleID $bio1}}
+{{$1 = "Bio"}}
+{{end}}
+{{if hasRoleID $DT}}
+{{$2 = "Deutsch"}}
+{{else if hasRoleID $EN1}}
+{{$2 = "Englisch"}}
+{{else if hasRoleID $EN2}}
+{{$2 = "Englisch"}}
+{{else if hasRoleID $MA}}
+{{$2 = "Mathe"}}
+{{end}}
+{{if hasRoleID $binf2}}
+{{$3 = "Binf"}}
+{{else if hasRoleID $binf3}}
+{{$3 = "Binf"}}
+{{else if hasRoleID $en1}}
+{{$3 = "Englisch"}}
+{{end}}
+{{if hasRoleID $lit2}}
+{{$4 = "Doku"}}
+{{$5 = "Doku"}}
+{{else if hasRoleID $ku2}}
+{{$4 = "Kunst"}}
+{{$5 = "Kunst"}}
+{{end}}
+{{$embed := cembed 
+"title" "Dein Stundenplan"
+"description" (joinStr "" "Dienstag | ungerade Woche \n\n1) " $1 "\n2) " $2 "\n3) " $3 "\n4) " $4 "\n5) " $5)
+"color" 52 
+"thumbnail" (sdict "url" $avatar)}}
+{{sendDM $embed}}
+
+{{else if eq (toInt $x) 3}}
+{{if hasRoleID $wl1}}
+{{$1 = "WL"}}
+{{else if hasRoleID $phy2}}
+{{$1 = "Physik"}}
+{{else if hasRoleID $gk3}}
+{{$1 = "GK"}}
+{{end}}
+{{if hasRoleID $ET}}
+{{$2 = "ET"}}
+{{else if hasRoleID $EL}}
+{{$2 = "EL"}}
+{{else if hasRoleID $BWL}}
+{{$2 = "BWL"}}
+{{else if hasRoleID $bio3}}
+{{$2 = "Bio"}}
+{{end}}
+{{if hasRoleID $ma1}}
+{{$3 = "Mathe"}}
+{{else if hasRoleID $ma2}}
+{{$3 = "Mathe"}}
+{{else if hasRoleID $ma3}}
+{{$3 = "Mathe"}}
+{{else if hasRoleID $binf5}}
+{{$3 = "Binf"}}
+{{end}}
+{{if hasRoleID $sp2}}
+{{$4 = "Rudern"}}
+{{else if hasRoleID $sp3}}
+{{$4 = "Tanzen"}}
+{{end}}
+{{$embed := cembed 
+"title" "Dein Stundenplan"
+"description" (joinStr "" "Mittwoch | ungerade Woche \n\n1) " $1 "\n2) " $2 "\n3) " $3 "\n4) " $4 "\n5) " $5)
+"color" 52 
+"thumbnail" (sdict "url" $avatar)}}
+{{sendDM $embed}}
+
+{{else if eq (toInt $x) 4}}
+{{if hasRoleID $Ges2}}
+{{$1 = "Gesundheit"}}
+{{else if hasRoleID $rL}}
+{{$1 = "Rechtslehre"}}
+{{else if hasRoleID $EL}}
+{{$1 = "EL"}}
+{{end}}
+{{if hasRoleID $FrF}}
+{{$2 = "Französisch"}}
+{{else if hasRoleID $spa1}}
+{{$2 = "Spanisch"}}
+{{else if hasRoleID $spa2}}
+{{$2 = "Spanisch"}}
+{{else if hasRoleID $spa3}}
+{{$2 = "Spanisch"}}
+{{else if hasRoleID $FrA}}
+{{$2 = "Französisch"}}
+{{end}}
+{{if hasRoleID $DT}}
+{{$3 = "Deutsch"}}
+{{else if hasRoleID $EN1}}
+{{$3 = "Englisch"}}
+{{else if hasRoleID $EN2}}
+{{$3 = "Englisch"}}
+{{else if hasRoleID $MA}}
+{{$3 = "Mathe"}}
+{{end}}
+{{if hasRoleID $en2}}
+{{$4 = "Englisch"}}
+{{else if hasRoleID $phi1}}
+{{$4 = "Philo"}}
+{{else if hasRoleID $rel1}}
+{{$4 = "Reli"}}
+{{else if hasRoleID $sp1}}
+{{$4 = "Leichtathletik"}}
+{{end}}
+{{if hasRoleID $phi2}}
+{{$5 = "Philo"}}
+{{else if hasRoleID $rel2}}
+{{$5 = "Reli"}}
+{{end}}
+{{$embed := cembed 
+"title" "Dein Stundenplan"
+"description" (joinStr "" "Donnerstag | ungerade Woche \n\n1) " $1 "\n2) " $2 "\n3) " $3 "\n4) " $4 "\n5) " $5)
+"color" 52 
+"thumbnail" (sdict "url" $avatar)}}
+{{sendDM $embed}}
+
+{{else if eq (toInt $x) 5}}
+{{if hasRoleID $ET}}
+{{$1 = "ET"}}
+{{else if hasRoleID $bio3}}
+{{$1 = "Bio"}}
+{{else if hasRoleID $BWL}}
+{{$1 = "BWL"}}
+{{else if hasRoleID $bio1}}
+{{$1 = "Bio"}}
+{{end}}
+{{if hasRoleID $DT}}
+{{$2 = "Deutsch"}}
+{{else if hasRoleID $EN1}}
+{{$2 = "Englisch"}}
+{{else if hasRoleID $EN2}}
+{{$2 = "Englisch"}}
+{{else if hasRoleID $MA}}
+{{$2 = "Mathe"}}
+{{end}}
+{{if hasRoleID $phy1}}
+{{$3 = "Physik"}}
+{{else if hasRoleID $erz2}}
+{{$3 = "Erziehung"}}
+{{else if hasRoleID $binf1}}
+{{$3 = "Binf"}}
+{{end}}
+{{if hasRoleID $binf4}}
+{{$4 = "Binf"}}
+{{else if hasRoleID $sp4}}
+{{$4 = "Schwimmen"}}
+{{end}}
+{{if hasRoleID $spt}}
+{{$5 = "Sport Theorie"}}
+{{end}}
+{{$embed := cembed 
+"title" "Dein Stundenplan"
+"description" (joinStr "" "Freitag | ungerade Woche \n\n1) " $1 "\n2) " $2 "\n3) " $3 "\n4) " $4 "\n5) " $5)
+"color" 52 
+"thumbnail" (sdict "url" $avatar)}}
+{{sendDM $embed}}
+{{else}}
+{{execCC 78 nil 1 $x}}
+{{end}}
+{{end}}
+{{end}}
+
+
+
+
+
+
+
+{{/*Stundenplan Teil 2*/}}
+{{$global := (toInt64 0)}}
+{{$key2 := "Day"}}
+{{$tmrw := "morgen"}}
+{{$x := (toInt .ExecData)}}
+{{$avatar := (joinStr "" "https://media.discordapp.net/attachments/861618411971543040/884804318480437328/afk.png?width=339&height=344")}}
+
+{{$1 := "-"}}
+{{$2 := "-"}}
+{{$3 := "-"}}
+{{$4 := "-"}}
+{{$5 := "-"}}
+
+{{$ch1 := 870389660969472051}}
+{{$dt1 := 870389739663016016}}
+{{$dt2 := 870389772751892600}}
+{{$dt3 := 870389806084014170}}
+{{$spa1 := 870389926447964242}}
+{{$spa2 := 870389959624904804}}
+{{$spa3 := 870390016185085993}}
+{{$FrA := 870389874711232632}}
+{{$FrF := 870390064503472169}}
+{{$phy1 := 870390119994105917}}
+{{$phy2 := 881285133464928256}}
+{{$wl1 := 870390168887103528}}
+{{$wl3 := 881285444191539290}}
+{{$sp1 := 881285673749983283}}
+{{$sp2 := 881285701876973588}}
+{{$sp3 := 881285733992771624}}
+{{$sp4 := 881285760697913366}}
+{{$sp5 := 881285788879425616}}
+{{$spt := 881285821049757740}}
+{{$gk1 := 881286285866725448}}
+{{$gk3 := 881286314455089152}}
+{{$gk4 := 881286359581622312}}
+{{$DT := 881286852525555803}}
+{{$EN1 := 881286759823060993}}
+{{$EN2 := 881286794908426301}}
+{{$MA := 881286821374468148}}
+{{$ma1 := 881287119438479410}}
+{{$ma2 := 881287142767202316}}
+{{$ma3 := 881287167513620542}}
+{{$en1 := 881287398103855144}}
+{{$en2 := 881287427233312790}}
+{{$binf1 := 881288370158968842}}
+{{$binf2 := 881288404640342056}}
+{{$binf3 := 881288443836117062}}
+{{$binf4 := 881288466770579546}}
+{{$binf5 := 881288483291926528}}
+{{$lit1 := 881288502438928384}}
+{{$lit2 := 881288522399633489}}
+{{$ku1 := 881288541898944632}}
+{{$ku2 := 881288561930960966}}
+{{$ku3 := 881288582545960960}}
+{{$mus := 881288599922941953}}
+{{$phi1 := 881288620932231178}}
+{{$phi2 := 881288638363762709}}
+{{$rel1 := 881288655203860493}}
+{{$rel2 := 881288993843601409}}
+{{$EL := 881289013393235988}}
+{{$ET := 881289030514401351}}
+{{$bio1 := 881289049057415209}}
+{{$bio3 := 881289064022675466}}
+{{$erz2 := 881289079365451826}}
+{{$Ges2 := 881289097551937537}}
+{{$BWL := 881289434509754429}}
+{{$rL := 881289449768624130}}
+{{$vwl := 881289465040097340}}
+
+{{if eq (toInt $x) 8}}
+    {{if hasRoleID $ch1}}
+        {{$1 = "Chemie"}}
+    {{else if hasRoleID $Ges2}}
+        {{$1 = "Gesundheit"}}
+    {{else if hasRoleID $BWL}}
+        {{$1 = "BWL"}}
+    {{end}}
+    {{if hasRoleID $dt1}}
+        {{$2 = "Deutsch"}}
+    {{else if hasRoleID $dt2}}
+        {{$2 = "Deutsch"}}
+    {{else if hasRoleID $dt3}}
+        {{$2 = "Deutsch"}}
+    {{end}}
+    {{if hasRoleID $FrF}}
+        {{$3 = "Französisch"}}
+    {{else if hasRoleID $spa1}}
+        {{$3 = "Spanisch"}}
+    {{else if hasRoleID $spa2}}
+        {{$3 = "Spanisch"}}
+    {{else if hasRoleID $spa3}}
+        {{$3 = "Spanisch"}}
+    {{else if hasRoleID $FrA}}
+        {{$3 = "Französisch"}}
+    {{end}}
+    {{if hasRoleID $rL}}
+        {{$4 = "Rechtslehre"}}
+    {{else if hasRoleID $wl1}}
+        {{$4 = "WL"}}
+    {{else if hasRoleID $wl3}}
+        {{$4 = "WL"}}
+    {{end}}
+    {{if hasRoleID $sp5}}
+        {{$5 = "Ski"}}
+    {{else if hasRoleID $gk1}}
+        {{$5 = "GK"}}
+    {{end}}
+    {{$embed := cembed 
+     "title" "Dein Stundenplan"
+     "description" (joinStr "" "Montag | gerade Woche \n\n1) " $1 "\n2) " $2 "\n3) " $3 "\n4) " $4 "\n5) " $5)
+     "color" 52 
+     "thumbnail" (sdict "url" $avatar)}}
+    {{sendDM $embed}}
+
+{{else if eq (toInt $x) 9}}
+    {{if hasRoleID $ET}}
+        {{$1 = "ET"}}
+    {{else if hasRoleID $Ges2}}
+        {{$1 = "Gesundheit"}}
+    {{else if hasRoleID $vwl}}
+        {{$1 = "VWL"}}
+    {{else if hasRoleID $bio1}}
+        {{$1 = "Bio"}}
+    {{end}}
+    {{if hasRoleID $ma1}}
+        {{$2 = "Mathe"}}
+    {{else if hasRoleID $ma2}}
+        {{$2 = "Mathe"}}
+    {{else if hasRoleID $ma3}}
+        {{$2 = "Mathe"}}
+    {{else if hasRoleID $en2}}
+        {{$2 = "Englisch"}}
+    {{end}}
+    {{if hasRoleID $binf2}}
+        {{$3 = "Binf"}}
+    {{else if hasRoleID $binf3}}
+        {{$3 = "Binf"}}
+    {{else if hasRoleID $en1}}
+        {{$3 = "Englisch"}}
+    {{end}}
+    {{if hasRoleID $ku3}}
+        {{$4 = "Plastiken"}}
+        {{$5 = "Plastiken"}}
+    {{else if hasRoleID $ku1}}
+        {{$4 = "Airbrush"}}
+        {{$5 = "Airbrush"}}
+    {{else if hasRoleID $lit1}}
+        {{$4 = "Theater"}}
+        {{$5 = "Theater"}}
+    {{else if hasRoleID $mus}}
+        {{$4 = "Musik"}}
+        {{$5 = "Musik"}}
+    {{end}}
+    {{$embed := cembed 
+    "title" "Dein Stundenplan"
+    "description" (joinStr "" "Dienstag | gerade Woche \n\n1) " $1 "\n2) " $2 "\n3) " $3 "\n4) " $4 "\n5) " $5)
+    "color" 52 
+    "thumbnail" (sdict "url" $avatar)}}
+    {{sendDM $embed}}
+
+{{else if eq (toInt $x) 10}}
+    {{if hasRoleID $wl1}}
+        {{$1 = "WL"}}
+    {{else if hasRoleID $phy2}}
+        {{$1 = "Physik"}}
+    {{else if hasRoleID $gk3}}
+        {{$1 = "GK"}}
+    {{end}}
+    {{if hasRoleID $ET}}
+        {{$2 = "ET"}}
+    {{else if hasRoleID $EL}}
+        {{$2 = "EL"}}
+    {{else if hasRoleID $BWL}}
+        {{$2 = "BWL"}}
+    {{else if hasRoleID $bio3}}
+        {{$2 = "Bio"}}
+    {{end}}
+    {{if hasRoleID $ma1}}
+        {{$3 = "Mathe"}}
+    {{else if hasRoleID $ma2}}
+        {{$3 = "Mathe"}}
+    {{else if hasRoleID $ma3}}
+        {{$3 = "Mathe"}}
+    {{else if hasRoleID $binf5}}
+        {{$3 = "Binf"}}
+    {{end}}
+    {{if hasRoleID $sp3}}
+        {{$4 = "Tanzen"}}
+    {{else if hasRoleID $sp2}}
+        {{$4 = "Rudern"}}
+    {{end}}
+    {{$embed := cembed 
+    "title" "Dein Stundenplan"
+    "description" (joinStr "" "Mittwoch | gerade Woche \n\n1) " $1 "\n2) " $2 "\n3) " $3 "\n4) " $4 "\n5) " $5)
+    "color" 52 
+    "thumbnail" (sdict "url" $avatar)}}
+    {{sendDM $embed}}
+
+{{else if eq (toInt $x) 11}}
+    {{if hasRoleID $erz2}}
+        {{$1 = "Erziehung"}}
+    {{else if hasRoleID $gk4}}
+        {{$1 = "GK"}}
+    {{else if hasRoleID $EL}}
+        {{$1 = "EL"}}
+    {{end}}
+    {{if hasRoleID $FrF}}
+        {{$2 = "Französisch"}}
+    {{else if hasRoleID $spa1}}
+        {{$2 = "Spanisch"}}
+    {{else if hasRoleID $spa2}}
+        {{$2 = "Spanisch"}}
+    {{else if hasRoleID $spa3}}
+        {{$2 = "Spanisch"}}
+    {{else if hasRoleID $FrA}}
+        {{$2 = "Französisch"}}
+    {{end}}
+    {{if hasRoleID $DT}}
+        {{$3 = "Deutsch"}}
+    {{else if hasRoleID $EN1}}
+        {{$3 = "Englisch"}}
+    {{else if hasRoleID $EN2}}
+        {{$3 = "Englisch"}}
+    {{else if hasRoleID $MA}}
+        {{$3 = "Mathe"}}
+    {{end}}
+    {{if hasRoleID $en2}}
+        {{$4 = "Englisch"}}
+    {{else if hasRoleID $phi1}}
+        {{$4 = "Philo"}}
+    {{else if hasRoleID $rel1}}
+        {{$4 = "Reli"}}
+    {{else if hasRoleID $sp1}}
+        {{$4 = "Leichtathletik"}}
+    {{end}}
+    {{if hasRoleID $phi2}}
+        {{$5 = "Philo"}}
+    {{else if hasRoleID $rel2}}
+        {{$5 = "Reli"}}
+    {{end}}
+    {{$embed := cembed 
+    "title" "Dein Stundenplan"
+    "description" (joinStr "" "Donnerstag | gerade Woche \n\n1) " $1 "\n2) " $2 "\n3) " $3 "\n4) " $4 "\n5) " $5)
+    "color" 52 
+    "thumbnail" (sdict "url" $avatar)}}
+    {{sendDM $embed}}
+
+{{else if eq (toInt $x) 12}}
+    {{if hasRoleID $dt1}}
+        {{$1 = "Deutsch"}}
+    {{else if hasRoleID $dt2}}
+        {{$1 = "Deutsch"}}
+    {{else if hasRoleID $dt3}}
+        {{$1 = "Deutsch"}}
+    {{else if hasRoleID $binf1}}
+        {{$1 = "Binf"}}
+    {{end}}
+    {{if hasRoleID $DT}}
+        {{$2 = "Deutsch"}}
+    {{else if hasRoleID $EN1}}
+        {{$2 = "Englisch"}}
+    {{else if hasRoleID $EN2}}
+        {{$2 = "Englisch"}}
+    {{else if hasRoleID $MA}}
+        {{$2 = "Mathe"}}
+    {{end}}
+    {{if hasRoleID $en1}}
+        {{$3 = "Englisch"}}
+    {{end}}
+    {{if hasRoleID $binf4}}
+        {{$4 = "Binf"}}
+    {{else if hasRoleID $sp4}}
+        {{$4 = "Schwimmen"}}
+    {{end}}
+    {{if hasRoleID $spt}}
+        {{$5 = "Sport Theorie"}}
+    {{end}}
+    {{$embed := cembed 
+    "title" "Dein Stundenplan"
+    "description" (joinStr "" "Freitag | gerade Woche \n\n1) " $1 "\n2) " $2 "\n3) " $3 "\n4) " $4 "\n5) " $5)
+    "color" 52 
+    "thumbnail" (sdict "url" $avatar)}}
+    {{sendDM $embed}}
+{{end}}
+

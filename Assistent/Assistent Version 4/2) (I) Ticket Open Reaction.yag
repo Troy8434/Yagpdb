@@ -1,0 +1,33 @@
+{{/*TICKET OPEN REACTION Made by Troy#8434*/}}
+{{$action := .Reaction.Emoji.Name}}
+{{$validEmojis := cslice "📩"}}
+{{$isValid := false}}
+{{with and (eq .ReactionMessage.ID 990901058781974548) .ReactionMessage.Embeds}}
+    {{$embed := index . 0}}
+    {{if and (eq $embed.Title "Channelanfrage")}}
+        {{$isValid = true}}
+    {{end}}
+{{end}}
+
+{{if and (in $validEmojis $action) $isValid}}
+    {{deleteMessageReaction nil .ReactionMessage.ID .User.ID $action}}
+    {{if eq $action "📩"}} 
+        
+        
+        {{$isGlobal := 1}}
+        {{$name := "Channelanfrage"}}
+        {{$lengthSec := 30}}
+        {{$id := 0}}
+        {{$key := joinStr "" "cooldown_" $name}}
+        {{if eq $isGlobal 0}}
+            {{$id = .User.ID}}
+        {{end}}
+        {{if dbGet (toInt64 $id) $key}} 
+            {{sendDM .User.Mention " bitte warte ein paar Sekunden bevor du den nächsten Channel erstellst."}}
+        {{else}}
+            {{dbSetExpire (toInt64 $id) $key "cooldown" $lengthSec}}
+            {{$topic := joinStr "" .User.Username}}
+            {{$x := createTicket nil $topic}}
+        {{end}}
+    {{end}}
+{{end}}

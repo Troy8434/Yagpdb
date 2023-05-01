@@ -1,0 +1,37 @@
+{{/*Timed Command 24h*/}}
+{{$global := (toInt64 0)}}
+{{$key := "Day"}}
+{{$e := dbIncr $global $key +1}}
+
+{{$xy := (dbGet $global $key).Value}}
+{{if eq (toInt $xy) 15}}
+    {{dbSet $global $key 1}}
+{{end}}
+
+
+{{if eq (toInt $xy) 0}}
+    {{sendMessage nil "test 0"}}
+{{else if eq (toInt $xy) 1}}
+    {{sendMessage nil "test 1"}}
+{{else if eq (toInt $xy) 2}}
+    {{sendMessage nil "test 2"}}
+{{else if eq (toInt $xy) 3}}
+    {{sendMessage nil "test 3"}}
+{{else if eq (toInt $xy) 4}}
+    {{sendMessage nil "test 4"}}
+{{else if eq (toInt $xy) 5}}
+    {{sendMessage nil "test 5"}}
+{{else if eq (toInt $xy) 8}}
+    {{sendMessage nil "test 6"}}
+{{else if eq (toInt $xy) 9}}
+    {{sendMessage nil "test 7"}}
+{{else if eq (toInt $xy) 10}}
+    {{sendMessage nil "test 8"}}
+{{else if eq (toInt $xy) 11}}
+    {{sendMessage nil "test 9"}}
+{{else if eq (toInt $xy) 12}}
+    {{sendMessage nil "test 10"}}
+{{else if eq (toInt $xy) 15}}
+    {{dbSet $global $key 1}}
+    {{execCC nil 1 $key}}
+{{end}}

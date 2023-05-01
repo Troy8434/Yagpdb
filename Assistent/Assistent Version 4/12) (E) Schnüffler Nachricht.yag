@@ -1,0 +1,7 @@
+{{/*SCHNÜFFLER MANUELL Made by Troy#8434*/}}
+{{$x1 := cembed
+ "title" "Bitte den Channel überprüfen, freischalten und in #neue-server einspeisen"
+ "color" 51
+ "footer" (sdict "text" "Hier die Nachricht für die Schnüffler triggern")
+}}
+{{sendMessage nil $x1}}

@@ -1,0 +1,18 @@
+{{$var := randInt 99}}
+{{if gt (len .Args) 1}}
+    {{if lt $var 33}}
+        *mampft* {{.StrippedMsg}}. Ich habe noch mehr Hunger. <:PandaSad:476773013702967296>
+    {{else if lt $var 66}}
+        *mampft* {{.StrippedMsg}}. Mhmm lecker :yum:
+    {{else}}
+        *mampft* {{.StrippedMsg}}. Wie? Das war schon alles? <:w00t:496319752562671636>
+    {{end}}
+{{else}}
+    {{if lt $var 33}}
+        *mampft Strom* jetzt bin ich wieder voller Energie <:Awsome:477152309286273034>
+    {{else if lt $var 66}}
+        *mampft eine ganze Kuhherde* Ich hab immer noch Hunger <:PandaSad:476773013702967296>
+    {{else}}
+        *mampft Lama und spuckt ihn wieder aus* Da ist zu viel Fell <:w00t:496319752562671636>
+    {{end}}
+{{end}}

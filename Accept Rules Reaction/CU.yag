@@ -1,0 +1,83 @@
+{{/*REGELN1 Made by Troy#8434*/}}
+{{$embed2 := cembed 
+ "title" "Regelwerk von Chill Universe"
+ "description" "__§1 Namensgebung__ \n\n- Usernamen dürfen nicht beleidigend o.Ä. sein.\n- Es ist untersagt sich als jemand anderes auf dem Server auszugeben.\n\n__§1.1 Avatar__\n\n- Die Darstellung von von beleidigenden, rassistischen oder pornografischen Inhalten in Avataren ist strengstens untersagt.\n\n__§2 Verhalten__\n\n- Der Umgang mit anderen Usern sollte stets freundlich sein.\n- Verbale Angriffe gegen andere User sind strengstens verboten.\n- Pornografische, sexistische oder rassistische Äußerungen sind untersagt.\n- Die vorgesehenen Channels sind richtig und angemessen zu benutzen.\n- Betrügerisches Verhalten, in jeglicher Form, ist untersagt.\n\n__§3 Spamming__\n\n- Jegliches Spamming ist nicht erlaubt.\n- Das unnötige Pingen von Usern und Teammitgliedern ist zu unterlassen.\n- Dazu zählen auch private Nachrichten an Usern vom Server.\n\n__§4 Werbung__\n\n- Werbung ist nur in <#866310598038781982>, <#866310640779657227> oder <#866310675289997342> erlaubt.\n\n__§5 Datenschutz__\n\n- Private Daten, wie Telefonnummern, Adressen, Passwörter oder Ähnliches, dürfen nicht öffentlich ausgetauscht werden.\n\n__§6 Meldepflicht__\n\n- Alle User sollten sich an das Regelwerk halten und dieses auch befolgen.\n- Sollte ein Regelverstoß von einem User erkannt werden, ist dieser umgehend bei unseren Moderatoren oder Administratoren zu melden. Es steht euch auch der Command `-report @User` zur Verfügung.\n\n__§7 Streitigkeiten__\n\n- Private Angelegenheiten und Streitigkeiten sind auch privat zu klären und gehören nicht auf den Server."
+ "color" 526344}}
+{{sendMessage nil $embed2}}
+
+
+
+
+
+
+
+{{/*REGELN2 Made by Troy#8434*/}}
+ {{$avatar1 := (joinStr "" "https://media.discordapp.net/attachments/865594335403442256/939903156324814858/Regeln.jpg?width=1024&height=351")}}
+ {{$embed2 := cembed 
+  "description" "__§8 Hackerangriffe__\n\n- Jeder Angriff gegen diesen Server ist strafbar. Dies betrifft vor allem das Flooding mit diversen Programmen und DDOS-Attacken.\n\n__§9 Gespräche__\n\n- Das Mitschneiden von Gesprächen ist auf dem gesamten Server nur nach Absprache mit den anwesenden Usern des entsprechenden Channels erlaubt.\n- Das Abspielen von Sounds, Musik und Verwenden von „Earrape“ ist nicht erlaubt.\n\n__§10 Zweitaccounts__\n\n- Das Verwenden von mehreren Accounts ist auf diesem Server nicht gestattet und wird mit einem Ban geahndet.\n\n__§11 Weisungsrecht__\n\n- Alle im <#865316192695746601> aufgelisteten Teammitglieder haben volle Weisungsrechte und diese sind nicht zu hinterfragen und vor allem nicht diskutabel.\n- Den Anweisungen der Teammitgliedern ist stets Folge zu leisten.\n\n__§12 Meinungsfreiheit & Streit__\n\n- Konstruktive Kritik ist nicht dasselbe, wie beleidigen, schlecht machen oder nerven.\n- Beleidigen und anschließend auf Meinungsfreiheit zu bestehen, wird mit einem permanenten Ban bestraft, da dies keine Ausrede ist.\n\n\nEs gelten auch die allgemeinen Discord Community Richtlinien: https://discord.com/guidelines\n\nBei einem Verstoß gegen die o.g. Regeln kann dieser mit einer Verwarnung, einem Mute, einem Kick oder einem Ban geahndet werden!\n\nDie hier aufgelisteten Regeln können von der Serverleitung jederzeit geändert bzw. angepasst werden.\n\nReagiere mit :white_check_mark: um dich zu Verifizieren."
+  "color" 526344
+  "image" (sdict "url" $avatar1)}}
+{{sendMessage nil $embed2}} 
+
+
+
+
+
+
+
+{{/*Regeln Made by Troy#8434*/}}
+{{$action := .Reaction.Emoji.Name}}
+{{$validEmojis := cslice "✅"}}
+{{$isValid := true }}
+{{$msg := joinStr "" "Willkommen <@" .User.ID "> ^^"}}    
+{{$var := randInt 1 100}}
+
+
+{{with and (eq .ReactionMessage.Author.ID 204255221017214977) .ReactionMessage.Embeds}}
+    {{$embed := index . 0}}
+{{end}}
+    
+{{if and (in $validEmojis $action) $isValid}}
+    {{if eq $action "✅"}}
+        {{if not (hasRoleID 865606811810004993)}}
+            {{addRoleID 865606811810004993}}
+            {{sleep 2}}
+            {{sendMessage 865317544428699668 $msg}}
+        {{end}}
+    {{end}}
+{{end}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

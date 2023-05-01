@@ -1,0 +1,36 @@
+{{ $avatar5 := (joinStr "" "https://cdn.discordapp.com/emojis/730810055657652234.png?v=1") }}
+{{$embed5 := cembed 
+ "title" "Bitte befolge diese Schritte um dich zu verifizieren"
+ "description" "Um also einen Server mit 18+ Inhalten zu bewerben brauchst du die <@&669486466363162625> Rolle. \n \n  Diese Rolle bekommst du, wenn du über 18 Jahre alt bist und das auch beweisen kannst. \n Zum Beweisen fordern wir ein Bild von deinem Ausweis und ein Bild von deinem Gesicht. Auf dem Ausweis dürfen alle Daten bis auf das Geburtsdatum und das Bild geschwärzt / verpixelt sein. Bei dem Bild von deinem Gesicht muss erkennbar sein, dass es sich um die selbe Person, wie auf dem Ausweis handelt. \n Zum Verifizieren schickst du diese beiden Bilder bitte an <@303966855452950529> oder <@502941014697181191>.\n \n Wenn du verifiziert bist, können die Bilder gelöscht werden. Sie werden nirgendwo gespeichert. \n Wenn du nicht über 18 bist oder dich nicht verifizieren möchtest, kann das auch jemand anderes aus dem Team deines Servers machen. \n \n Wenn du dich bei <@303966855452950529> oder <@502941014697181191> verifiziert hast, drücke bitte auf den :thumbsup: Emoji unter dieser Nachricht."
+ "color" 51
+ "thumbnail" (sdict "url" $avatar5) 
+ "footer" (sdict "text" "Team, diese Nachricht bitte vor dem Veröffentlichen löschen.")}}
+
+{{$embed6 := cembed 
+ "title" "Dieser Server bietet NSFW Inhalte, hat aber ein eigenes Verifizierungssystem, welches unseren Bedingungen entspricht."
+ "color" 51}}
+
+{{$Control := joinStr "" "<@&530783878701383690> und <@&814912888816140338>. Bitte überprüfen, ob das Verifikationssystem des Servers den Vorgaben entspricht."}}
+
+
+
+
+
+
+{{ $action2 := .Reaction.Emoji.Name}}
+{{ $validEmojis2 := cslice "◀️" "▶️"}}
+{{ $isValid2 := false }}
+{{ with and (eq .ReactionMessage.Author.ID 204255221017214977) .ReactionMessage.Embeds }}
+      {{ $embed := index . 0 }} {{/* The first embed */}}
+      {{ if and (eq $embed.Title "Selber überprüfen") $embed.Footer }}
+            {{ $isValid2 = true }}
+      {{ end }}
+{{ end }}
+{{ if and (in $validEmojis2 $action2) $isValid2}}
+      {{ deleteMessageReaction nil .ReactionMessage.ID .User.ID $action2 }}
+      {{ if eq $action2 "◀️" }} {{$x := sendMessageRetID nil $embed5}} {{addMessageReactions nil $x "👍"}}
+      {{ else }}
+            {{ if eq $action2 "▶️" }} {{sendMessage nil $embed6}} {{sendMessageNoEscape nil $Control}}
+            {{ end }}
+      {{ end }}
+{{ end }}

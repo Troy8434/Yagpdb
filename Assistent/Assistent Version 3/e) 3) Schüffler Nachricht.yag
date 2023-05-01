@@ -1,0 +1,6 @@
+{{$haha := cembed
+ "title" "Bitte den Channel überprüfen und freischalten"
+ "color" 51
+ "footer" (sdict "text" "Hier die Nachricht für die Schnüffler triggern")
+}}
+{{sendMessage nil $haha}}

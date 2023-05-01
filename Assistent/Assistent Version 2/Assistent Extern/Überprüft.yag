@@ -1,0 +1,5 @@
+{{$embed6 := cembed 
+    "title" "Dieser Server bietet NSFW Inhalte, hat aber ein eigenes Verifizierungssystem, welches unseren Bedingungen entspricht."
+    "color" 51
+}}
+{{sendMessage nil $embed6}}

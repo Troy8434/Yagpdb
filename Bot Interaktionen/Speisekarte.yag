@@ -1,0 +1,30 @@
+{{$x1 := randInt 100}}
+
+{{if reFind "Kaffee" .StrippedMsg}}
+    {{sendMessage nil "Bitteschön, hier ist dein gewünschter Kaffee ☕"}}
+{{else if reFind "Pommes" .StrippedMsg}}
+    {{sendMessage nil "Bitteschön, hier sind deine Pommes 🍟 Lass sie dir schmeken."}}
+{{else if reFind "Popcorn" .StrippedMsg}}
+    {{if lt $x1 50}}
+        {{sendMessage nil "Bitteschön, hier ist dein Popcorn 🍿 Wenn du extra Karamell oder Zucker haben willst... Pech gehabt 🤷"}}
+    {{else}}
+        {{sendMessage nil "<a:popcorn_parrot:448846256026943493>"}}
+    {{end}}
+{{else if reFind "Spaghetti" .StrippedMsg}}
+    {{sendMessage nil "Bitteschön, hier sind deine Spaghetti 🍝 Guten Appetit!"}}
+{{else if reFind "Eis" .StrippedMsg}}
+    {{sendMessage nil "Hier ist dein Eis 🍨 aber ess nicht zu schnell, sonst bekommst du Hirnfrost 👀"}}
+{{else if reFind "Kuchen" .StrippedMsg}}
+    {{sendMessage nil "Hier ist dein Stück Kuchen 🍰 ein ganzer ist nicht gut für deine Gesundheit!"}}
+{{else if reFind "Donut" .StrippedMsg}}
+    {{sendMessage nil "Hier ist dein Donut 🍩 aber sei vorsichtig, zu viel Zucker ist nicht gut für die Zähne!"}}
+{{else if reFind "Burger" .StrippedMsg}}
+    {{sendMessage nil "Bitteschön, hier ist dein Burger 🍔 Lass ihn dir schmeken."}}
+{{else if reFind "Pancakes" .StrippedMsg}}
+    {{sendMessage nil "Bitteschön, hier sind deine Pancakes 🥞 Guten Hunger!"}}
+{{else if reFind "Cola" .StrippedMsg}}
+    {{sendMessage nil "Bitteschön, hier deine gewünschte Cola 🥛"}}
+{{else}}
+    {{$x2 := joinStr "" "Wie Sie wollen <:awesome:477152309286273034> \n_Bringt" .StrippedMsg "_ \nGuten Appetit."}}
+    {{sendMessage nil $x2}}
+{{end}}

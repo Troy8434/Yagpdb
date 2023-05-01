@@ -1,0 +1,16 @@
+{{editChannelName nil (joinStr "" "" (.StrippedMsg))}}
+
+{{sleep 1}}
+{{ $avatar := (joinStr "" "https://cdn.discordapp.com/emojis/730809897452568756.png?v=1") }}
+{{$embed := cembed 
+ "title" "Gut gemacht. Dein Channel hat nun einen neuen Namen."
+ "description" "Um mit dem nächsten Schritt fortzufahren, schreibe bitte `-weiter`. \n Dort werden alle wichtigen Vorraussetzungen und Regeln für das Werben hier kurz zusammengefasst. Wenn du willst, kannst du auch die längere und ausführliche Version in <#656434990493728769> und <#819139703558635530> lesen und danach `-weiter` schreiben."
+ "color" 51
+ "thumbnail" (sdict "url" $avatar) 
+ "footer" (sdict "text" "Diese Nachricht wird in 5 Minuten automatisch gelöscht.")
+}}
+{{$x := sendMessageRetID nil $embed }}
+{{deleteTrigger 1}}
+{{deleteMessage nil $x 300}}
+{{addRoleID "656445638942130187"}}
+{{removeRoleID "656434185161932820"}}

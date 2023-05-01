@@ -1,0 +1,479 @@
+{{/*TICKET OPEN REACTION EVENT Made by Troy#8434*/}}
+{{$User := (toInt64 .User.ID)}}
+{{$action := .Reaction.Emoji.Name}}
+{{$validEmojis := cslice "📩"}}
+{{$isValid := false}}
+{{if eq .ReactionMessage.ID 894314607810854963}}
+    {{$isValid = true}}
+{{else if eq .ReactionMessage.ID 928304617383657532}}
+    {{$isValid = true}}
+    {{dbSet $User "Brief0" "active"}}
+{{end}}
+
+{{if and (in $validEmojis $action) $isValid}}
+    {{deleteMessageReaction nil .ReactionMessage.ID .User.ID $action}}
+    {{if eq $action "📩"}} 
+        
+        {{$key := "Channelanfrage"}}
+        {{$length := 30}}
+        {{if dbGet (toInt64 $User) $key}} 
+            {{sendDM .User.Mention " bitte warte ein paar Sekunden bevor du den nächsten Channel erstellst."}}
+        {{else}}
+            {{dbSetExpire (toInt64 $User) $key "cooldown" $length}}
+            {{$topic := joinStr "" .User.Username}}
+            {{$x := createTicket nil $topic}}
+        {{end}}
+    {{end}}
+{{end}}
+
+
+
+
+
+
+
+{{$User := .User.ID}}
+{{if (dbGet $User "Brief0")}}
+    {{/*BRIEF Made by Troy#8434*/}}
+    {{$User := (toInt64 .User.ID)}}
+    {{$key0 := "Brief"}}
+    {{$embed1 := cembed 
+     "title" "Informationen über deinen Brief:"
+     "description" "**Art: \nPapier: \nSchrift: \nSticker: \nEmpfänger: \nSender: \nText:**"
+     "color" 51}}
+    {{$emb := sendMessageRetID nil $embed1}}
+    {{dbSetExpire $User $key0 (str $emb) 604800}}
+
+    {{/*BRIEF START Made by Troy#8434*/}}
+    {{$embed2 := sendMessageRetID nil (complexMessage
+    "content" .User.Mention
+    "embed" (cembed
+     "title" "Art des Briefes"
+     "description" "Bitte wähle zwischen: \n`1)` Freundesbrief \n`2)` Liebesbrief \n Command: -art (Art des Briefes)"
+     "color" 51
+     "footer" (sdict "text" "Diese Nachricht wird in 10 Minuten automatisch gelöscht")))}}
+    {{deleteTrigger 1}}
+    {{deleteMessage nil $embed2 600}}
+
+    {{$x2 := joinStr "" "Schreibe: **-art (Art des Briefes)** um zu beginnen. \nSchreibe: **-ticket close** wenn du doch keinen Brief schreiben willst."}}
+    {{editChannelTopic nil $x2}}
+    {{dbDel $User "Brief0"}}
+{{else}}
+    {{/*TICKET OPEN TEXT Made by Troy#8434*/}}
+    {{$avatar := (joinStr "" "https://cdn.discordapp.com/emojis/711993392879370331.png?v=1") }}
+    {{$x1 := sendMessageRetID nil (complexMessage
+     "content" .User.Mention
+     "embed" (cembed 
+     "title" "Lass uns starten"
+     "description" " So, dann lass uns mal deinen Channel einrichten. Fange bitte zuerst damit an deinen Channel umzubenennen... \n \n Oh. Da habe ich doch wohl schon wieder vergessen mich Vorzustellen. \n Ich bin Lexicat, das Servermaskotchen und werde dir bei der Erstellung deines Werbechannels helfen. Folge einfach den Anweisungen.  \n \n Also wie ich schon sagte. Du solltest damit anfangen deinen Channel zu benennen. Das kannst du mit dem Befehl `-setname (Servername)`. \n \n Und ja, bei Servername solltest du den Namen deines Servers einfügen. "
+     "color" 51
+     "thumbnail" (sdict "url" $avatar) 
+     "footer" (sdict "text" "Diese Nachricht wird automatisch gelöscht, sobald du fortfährst.")))}}
+    {{$x2 := joinStr "" "Vorsteller: <@" .User.ID ">. \nUm diesen Channel wieder zu schließen, schreibe: -ticket close"}}
+    {{editChannelTopic nil $x2}}
+    
+    {{$x3 := joinStr "" "3) " .Channel.ID }}
+    {{$x4 := joinStr "" $x1}}
+    {{dbSetExpire (toInt64 .User.ID) $x3 $x4 604800}}
+{{end}}
+
+
+
+
+
+
+
+{{/*BRIEFART Made by Troy#8434*/}}
+{{$User := (toInt64 .User.ID)}}
+{{$key0 := "Brief"}}
+{{$key1 := "Briefart"}}
+{{$key2 := "Papier"}}
+{{$key3 := "Schrift"}}
+{{$key4 := "Sticker"}}
+{{$key5 := "Empfänger"}}
+{{$key6 := "Sender"}}
+{{$key7 := "Text"}}
+{{$args := parseArgs 1 "Keine Briefart gewählt"
+(carg "string" "Briefart")}}
+
+{{$x1 := ($args.Get 0)}}
+{{dbSetExpire $User $key1 $x1 604800}}
+{{$x2 := (dbGet $User $key0).Value}}
+{{$x3 := (toInt64 $x2)}}
+
+{{$o1 := (dbGet $User $key1).Value}}
+{{$o2 := (dbGet $User $key2).Value}}
+{{$o3 := (dbGet $User $key3).Value}}
+{{$o4 := (dbGet $User $key4).Value}}
+{{$o5 := (dbGet $User $key5).Value}}
+{{$o6 := (dbGet $User $key6).Value}}
+{{$o7 := (dbGet $User $key7).Value}}
+
+{{editMessage nil $x3 (cembed
+"title" "Informationen über deinen Brief:"
+"description" (joinStr "" " **Art:** " $o1 " \n**Papier:** " $o2 " \n**Schrift:** " $o3 " \n**Sticker:** " $o4 " \n**Empfänger:** " $o5 " \n**Sender:** " $o6 " \n**Text:** " $o7)
+"color" 51
+)}}
+
+{{$img := (joinStr "" "https://media.discordapp.net/attachments/911664344109047848/936977103939862528/Bild2.png?width=1080&height=584")}}
+{{$embed := cembed 
+ "title" "Briefpapier"
+ "description" "Bitte wähle zwischen: \n`1)` Papier 1 \n`2)` Papier 2 \n`3)` Papier 3 \n Command: -papier (Papierart oder Nummer)"
+ "color" 51
+ "image" (sdict "url" $img)
+ "footer" (sdict "text" "Diese Nachricht wird in 10 Minuten automatisch gelöscht")}}
+{{$del1 := sendMessageRetID nil $embed}}
+{{deleteTrigger 1}}
+{{deleteMessage nil $del1 600}}
+
+
+
+
+
+
+
+{{/*BRIFPAPIER Made by Troy#8434*/}}
+{{$User := (toInt64 .User.ID)}}
+{{$key0 := "Brief"}}
+{{$key1 := "Briefart"}}
+{{$key2 := "Papier"}}
+{{$key3 := "Schrift"}}
+{{$key4 := "Sticker"}}
+{{$key5 := "Empfänger"}}
+{{$key6 := "Sender"}}
+{{$key7 := "Text"}}
+{{$args := parseArgs 1 "Keine Papierart gewählt"
+(carg "string" "Papierart")}}
+
+{{$x1 := ($args.Get 0)}}
+{{dbSetExpire $User $key2 $x1 604800}}
+{{$x2 := (dbGet $User $key0).Value}}
+{{$x3 := (toInt64 $x2)}}
+
+{{$o1 := (dbGet $User $key1).Value}}
+{{$o2 := (dbGet $User $key2).Value}}
+{{$o3 := (dbGet $User $key3).Value}}
+{{$o4 := (dbGet $User $key4).Value}}
+{{$o5 := (dbGet $User $key5).Value}}
+{{$o6 := (dbGet $User $key6).Value}}
+{{$o7 := (dbGet $User $key7).Value}}
+
+{{editMessage nil $x3 (cembed
+"title" "Informationen über deinen Brief:"
+"description" (joinStr "" " **Art:** " $o1 " \n**Papier:** " $o2 " \n**Schrift:** " $o3 " \n**Sticker:** " $o4 " \n**Empfänger:** " $o5 " \n**Sender:** " $o6 " \n**Text:** " $o7)
+"color" 51
+)}}
+
+{{$img := (joinStr "" "https://media.discordapp.net/attachments/861618411971543040/936979479836893205/Bild3.png?width=670&height=475")}}
+{{$embed := cembed 
+ "title" "Schrift"
+ "description" "Bitte wähle zwischen: \n`1)` Schrift 1 \n`2)` Schrift 2 \n`3)` Schrift 3 \n Command: -schrift (Schriftart oder Nummer)"
+ "color" 51
+ "image" (sdict "url" $img)
+ "footer" (sdict "text" "Diese Nachricht wird in 10 Minuten automatisch gelöscht")}}
+{{$del1 := sendMessageRetID nil $embed}}
+{{deleteTrigger 1}}
+{{deleteMessage nil $del1 600}}
+
+
+
+
+
+
+{{/*BRIEFSCHRIFT Made by Troy#8434*/}}
+{{$User := (toInt64 .User.ID)}}
+{{$key0 := "Brief"}}
+{{$key1 := "Briefart"}}
+{{$key2 := "Papier"}}
+{{$key3 := "Schrift"}}
+{{$key4 := "Sticker"}}
+{{$key5 := "Empfänger"}}
+{{$key6 := "Sender"}}
+{{$key7 := "Text"}}
+{{$args := parseArgs 1 "Keine Schrift gewählt"
+(carg "string" "Schrift")}}
+
+{{$x1 := ($args.Get 0)}}
+{{dbSetExpire $User $key3 $x1 604800}}
+{{$x2 := (dbGet $User $key0).Value}}
+{{$x3 := (toInt64 $x2)}}
+
+{{$o1 := (dbGet $User $key1).Value}}
+{{$o2 := (dbGet $User $key2).Value}}
+{{$o3 := (dbGet $User $key3).Value}}
+{{$o4 := (dbGet $User $key4).Value}}
+{{$o5 := (dbGet $User $key5).Value}}
+{{$o6 := (dbGet $User $key6).Value}}
+{{$o7 := (dbGet $User $key7).Value}}
+
+{{editMessage nil $x3 (cembed
+"title" "Informationen über deinen Brief:"
+"description" (joinStr "" " **Art:** " $o1 " \n**Papier:** " $o2 " \n**Schrift:** " $o3 " \n**Sticker:** " $o4 " \n**Empfänger:** " $o5 " \n**Sender:** " $o6 " \n**Text:** " $o7)
+"color" 51
+)}}
+
+{{$img := (joinStr "" "https://media.discordapp.net/attachments/861618411971543040/936980466458820619/Bild4.png?width=1080&height=584")}}
+{{$embed := cembed 
+ "title" "Sticker"
+ "description" "Bitte wähle zwischen: \n`1)` Sticker 1 \n`2)` Sticker 2 \n`3)` Sticker 3 \n Command: -sticker (Stickername oder Nummer)"
+ "color" 51
+ "image" (sdict "url" $img)
+ "footer" (sdict "text" "Diese Nachricht wird in 10 Minuten automatisch gelöscht")}}
+{{$del1 := sendMessageRetID nil $embed}}
+{{deleteTrigger 1}}
+{{deleteMessage nil $del1 600}}
+
+
+
+
+
+
+
+{{/*BRIEFSTICKER Made by Troy#8434*/}}
+{{$User := (toInt64 .User.ID)}}
+{{$key0 := "Brief"}}
+{{$key1 := "Briefart"}}
+{{$key2 := "Papier"}}
+{{$key3 := "Schrift"}}
+{{$key4 := "Sticker"}}
+{{$key5 := "Empfänger"}}
+{{$key6 := "Sender"}}
+{{$key7 := "Text"}}
+{{$args := parseArgs 1 "Kein Sticker gewählt"
+(carg "string" "Schrift")}}
+
+{{$x1 := ($args.Get 0)}}
+{{dbSetExpire $User $key4 $x1 604800}}
+{{$x2 := (dbGet $User $key0).Value}}
+{{$x3 := (toInt64 $x2)}}
+
+{{$o1 := (dbGet $User $key1).Value}}
+{{$o2 := (dbGet $User $key2).Value}}
+{{$o3 := (dbGet $User $key3).Value}}
+{{$o4 := (dbGet $User $key4).Value}}
+{{$o5 := (dbGet $User $key5).Value}}
+{{$o6 := (dbGet $User $key6).Value}}
+{{$o7 := (dbGet $User $key7).Value}}
+
+{{editMessage nil $x3 (cembed
+"title" "Informationen über deinen Brief:"
+"description" (joinStr "" " **Art:** " $o1 " \n**Papier:** " $o2 " \n**Schrift:** " $o3 " \n**Sticker:** " $o4 " \n**Empfänger:** " $o5 " \n**Sender:** " $o6 " \n**Text:** " $o7)
+"color" 51
+)}}
+
+{{$embed := cembed 
+ "title" "Empfänger"
+ "description" "An wen soll der Brief gehen? \nCommand: -empfänger (Empängername#000)"
+ "color" 51
+ "footer" (sdict "text" "Diese Nachricht wird in 10 Minuten automatisch gelöscht")}}
+{{$del1 := sendMessageRetID nil $embed}}
+{{deleteTrigger 1}}
+{{deleteMessage nil $del1 600}}
+
+
+
+
+
+
+{{/*BRIEFEMPFÄNGER Made by Troy#8434*/}}
+{{$User := (toInt64 .User.ID)}}
+{{$key0 := "Brief"}}
+{{$key1 := "Briefart"}}
+{{$key2 := "Papier"}}
+{{$key3 := "Schrift"}}
+{{$key4 := "Sticker"}}
+{{$key5 := "Empfänger"}}
+{{$key6 := "Sender"}}
+{{$key7 := "Text"}}
+{{$args := parseArgs 1 "Kein Empfänger gewählt"
+(carg "string" "Empfänger")}}
+
+{{$x1 := ($args.Get 0)}}
+{{dbSetExpire $User $key5 $x1 604800}}
+{{$x2 := (dbGet $User $key0).Value}}
+{{$x3 := (toInt64 $x2)}}
+
+{{$o1 := (dbGet $User $key1).Value}}
+{{$o2 := (dbGet $User $key2).Value}}
+{{$o3 := (dbGet $User $key3).Value}}
+{{$o4 := (dbGet $User $key4).Value}}
+{{$o5 := (dbGet $User $key5).Value}}
+{{$o6 := (dbGet $User $key6).Value}}
+{{$o7 := (dbGet $User $key7).Value}}
+
+{{editMessage nil $x3 (cembed
+"title" "Informationen über deinen Brief:"
+"description" (joinStr "" " **Art:** " $o1 " \n**Papier:** " $o2 " \n**Schrift:** " $o3 " \n**Sticker:** " $o4 " \n**Empfänger:** " $o5 " \n**Sender:** " $o6 " \n**Text:** " $o7)
+"color" 51
+)}}
+
+{{$embed := cembed 
+ "title" "Sender"
+ "description" "Von wem kommt der Brief? \n Tipp: Du kannst dich auch\"anonym\" ausgeben oder ein Pseudonym Verwenden\nCommand: -sender (Name / Anonym / Pseudonym)"
+ "color" 51
+ "footer" (sdict "text" "Diese Nachricht wird in 10 Minuten automatisch gelöscht")}}
+{{$del1 := sendMessageRetID nil $embed}}
+{{deleteTrigger 1}}
+{{deleteMessage nil $del1 600}}
+
+
+
+
+
+
+
+{{/*BRIEFSENDER Made by Troy#8434*/}}
+{{$User := (toInt64 .User.ID)}}
+{{$key0 := "Brief"}}
+{{$key1 := "Briefart"}}
+{{$key2 := "Papier"}}
+{{$key3 := "Schrift"}}
+{{$key4 := "Sticker"}}
+{{$key5 := "Empfänger"}}
+{{$key6 := "Sender"}}
+{{$key7 := "Text"}}
+{{$args := parseArgs 1 "Kein Sender gewählt"
+(carg "string" "Sender")}}
+
+{{$x1 := ($args.Get 0)}}
+{{dbSetExpire $User $key6 $x1 604800}}
+{{$x2 := (dbGet $User $key0).Value}}
+{{$x3 := (toInt64 $x2)}}
+
+{{$o1 := (dbGet $User $key1).Value}}
+{{$o2 := (dbGet $User $key2).Value}}
+{{$o3 := (dbGet $User $key3).Value}}
+{{$o4 := (dbGet $User $key4).Value}}
+{{$o5 := (dbGet $User $key5).Value}}
+{{$o6 := (dbGet $User $key6).Value}}
+{{$o7 := (dbGet $User $key7).Value}}
+
+{{editMessage nil $x3 (cembed
+"title" "Informationen über deinen Brief:"
+"description" (joinStr "" " **Art:** " $o1 " \n**Papier:** " $o2 " \n**Schrift:** " $o3 " \n**Sticker:** " $o4 " \n**Empfänger:** " $o5 " \n**Sender:** " $o6 " \n**Text:** " $o7)
+"color" 51
+)}}
+
+{{$embed := cembed 
+ "title" "Text"
+ "description" "Hier kannst du den Text deines Briefes schreiben. Bitte achte darauf nicht mehr als 150 Wörter zu schreiben, es soll ja schließlich kein Roman werden.\nCommand: -text (Dein Text)"
+ "color" 51
+ "footer" (sdict "text" "Diese Nachricht wird in 10 Minuten automatisch gelöscht")}}
+{{$del1 := sendMessageRetID nil $embed}}
+{{deleteTrigger 1}}
+{{deleteMessage nil $del1 600}}
+
+
+
+
+
+
+
+{{/*BRIEFTEXT Made by Troy#8434*/}}
+{{$User := (toInt64 .User.ID)}}
+{{$key0 := "Brief"}}
+{{$key1 := "Briefart"}}
+{{$key2 := "Papier"}}
+{{$key3 := "Schrift"}}
+{{$key4 := "Sticker"}}
+{{$key5 := "Empfänger"}}
+{{$key6 := "Sender"}}
+{{$key7 := "Text"}}
+{{$args := parseArgs 1 "Kein Sender gewählt"
+(carg "string" "Sender")}}
+
+{{$x1 := ($args.Get 0)}}
+{{dbSetExpire $User $key7 $x1 604800}}
+{{$x2 := (dbGet $User $key0).Value}}
+{{$x3 := (toInt64 $x2)}}
+
+{{$o1 := (dbGet $User $key1).Value}}
+{{$o2 := (dbGet $User $key2).Value}}
+{{$o3 := (dbGet $User $key3).Value}}
+{{$o4 := (dbGet $User $key4).Value}}
+{{$o5 := (dbGet $User $key5).Value}}
+{{$o6 := (dbGet $User $key6).Value}}
+{{$o7 := (dbGet $User $key7).Value}}
+
+{{editMessage nil $x3 (cembed
+"title" "Informationen über deinen Brief:"
+"description" (joinStr "" " **Art:** " $o1 " \n**Papier:** " $o2 " \n**Schrift:** " $o3 " \n**Sticker:** " $o4 " \n**Empfänger:** " $o5 " \n**Sender:** " $o6 " \n**Text:** " $o7)
+"color" 51
+)}}
+
+{{$embed := cembed 
+ "title" "Alright"
+ "description" "Dein Brief wäre jetzt fertig. Wenn du noch irgendwas ändern möchtest, kannst du das machen, die Commands dafür kennst du ja. Einzelne Änderungen sind möglich, ohne den kompletten Brief neu zu machen. \n\n Wenn du den Brief anschicken möchtest, schreibe `-submit`"
+ "color" 51
+ "footer" (sdict "text" "Diese Nachricht wird in 10 Minuten automatisch gelöscht")}}
+
+{{$del1 := sendMessageRetID nil $embed}}
+{{deleteTrigger 1}}
+{{deleteMessage nil $del1 600}}
+
+
+
+
+
+
+
+{{/*SUBMIT Made by Troy#8434*/}}
+{{$User := (toInt64 .User.ID)}}
+{{$key1 := "Briefart"}}
+{{$key2 := "Papier"}}
+{{$key3 := "Schrift"}}
+{{$key4 := "Sticker"}}
+{{$key5 := "Empfänger"}}
+{{$key6 := "Sender"}}
+{{$key7 := "Text"}}
+
+{{$o1 := (dbGet $User $key1).Value}}
+{{$o2 := (dbGet $User $key2).Value}}
+{{$o3 := (dbGet $User $key3).Value}}
+{{$o4 := (dbGet $User $key4).Value}}
+{{$o5 := (dbGet $User $key5).Value}}
+{{$o6 := (dbGet $User $key6).Value}}
+{{$o7 := (dbGet $User $key7).Value}}
+
+{{sendMessage 936996473135054908 
+(cembed
+"title" "Ein neuer Brief kommt herangeflattert"
+"description" (joinStr "" " **Art:** " $o1 " \n**Papier:** " $o2 " \n**Schrift:** " $o3 " \n**Sticker:** " $o4 " \n**Empfänger:** " $o5 " \n**Sender:** " $o6 " \n**Text:** " $o7)
+"color" 51
+)}}
+{{addReactions nil ":ja:730810177099399211"}}
+{{execCC 89 nil 1 (toInt64 .User.ID)}}
+{{sleep 5}}
+{{execAdmin "ticket close Brief delivered"}}
+
+
+
+
+
+
+
+{{/*DELETE ENTRYS Made by Troy#8434*/}}
+{{$User := (toInt64 .ExecData)}}
+{{$key0 := "Brief"}}
+{{$key1 := "Briefart"}}
+{{$key2 := "Papier"}}
+{{$key3 := "Schrift"}}
+{{$key4 := "Sticker"}}
+{{$key5 := "Empfänger"}}
+{{$key6 := "Sender"}}
+{{$key7 := "Text"}}
+
+{{dbDel $User $key0}}
+{{dbDel $User $key1}}
+{{dbDel $User $key2}} 
+{{dbDel $User $key3}}
+{{dbDel $User $key4}}
+{{dbDel $User $key5}}
+{{dbDel $User $key6}}
+{{dbDel $User $key7}}
+
+
+
+
+
+

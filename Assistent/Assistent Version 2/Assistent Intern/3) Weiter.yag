@@ -1,0 +1,24 @@
+{{ $avatar := (joinStr "" "https://cdn.discordapp.com/emojis/712036123181842454.png?v=1") }}
+{{$embed := cembed 
+ "title" "Wichtige Informationen"
+ "description" "**Regeln zum Werben** (<#656434990493728769>) \n <a:name:769434454762455131> Text bearbeiten JA, neu posten NEIN (Die Ausnahme: Wenn du beim Bearbeiten feststellst, dass der Text über 2000 Zeichen lang ist, ist es dir erlaubt den Text in 2 Nachrichten zu zerteilen).  \n <a:name:769434454762455131> Wenn der Link abgelaufen ist, wird der Werbende darauf aufmerksam gemacht. Wenn der Link nach 7 Tagen nicht erneuert ist, wird der Channel gelöscht. \n <a:name:769434454762455131> Keine Pings in dem Werbechannel. \n <a:name:769434454762455131> Es muss immer ein Vertreter des Servers (Besitzer des Channels) hier anwesend sein, ansonsten wird der Channel wieder gelöscht. \n \n **Anforderngen** (<#669484824301535242>) \n Dein Werbetext sollte mindestens die folgenen Kriterien erfüllen: \n <a:name:769434454762455131> Eine allgemeine Beschreibung. (Einfach nicht nur der Link) \n <a:name:769434454762455131> Es sollte klar erkennbar sein zu welcher Kategorie der Channel gehört. (In der Beschreibung erkennbar oder nochmal dazu schreiben.) \n <a:name:769434454762455131> Ein Invite-Link zu eurem Server. (Es ist wichtig, dass dieser Link nicht abläuft. Bitte achtet darauf.) \n \n **Verbotene Server** (<#656434990493728769>) \n Server mit folgenden Eigenschaften dürfen hier nicht beworben werden: \n <a:black:721602322198954046> Dating / Partnerschaftssuche. \n <a:black:721602322198954046> Sklaven Rollenspiel. \n <a:black:721602322198954046> Rollenspiel Server die Sex unter / mit Minderjährigen erlauben. \n <a:black:721602322198954046> Jedliche sexualisierte Abbildung von Miderjährigen. \n <a:black:721602322198954046> Jedliche Verherlichung oder Ermutigung von Suizid, Selbstverletzung oder Essstörung. \n <a:black:721602322198954046> Bewerben von verbotenen Substanzen (und Waffen). \n <a:black:721602322198954046> Bildlich dargestellte starke Gewalt und Gewalt an Tieren."
+ "color" 51
+ "thumbnail" (sdict "url" $avatar) 
+ "footer" (sdict "text" "Diese Nachricht wird in 10 Minuten automatisch gelöscht")}}
+
+{{ $avatar2 := (joinStr "" "https://cdn.discordapp.com/emojis/712035798920462356.png?v=1") }}
+{{$embed2 := cembed 
+ "title" "Hat dein Server NSFW oder Erotik Role Play (18+ Zeug)?"
+ "description" " Dies ist durchaus eine wichtige Frage, da wir den Jugendschutz sehr ernst nehmen. Du solltest hier lieber ehrlich sein. \n <a:name:769434454762455131> Reagiere mit 👍 wenn dein Server 18+ Inhalte hat. \n <a:name:769434454762455131> Reagiere mit 🤝wenn dein Server zwar 18+ Inhalte hat, aber diese durch ein Verifikationssystem abgegrenzt sind. \n <a:name:769434454762455131> Reagiere mit 👎 wenn dein Server keine 18+ Inhalte hat. \n \n Es zält auch zu NSFW, wenn ihr NSFW-Channel habt."
+ "color" 51
+ "thumbnail" (sdict "url" $avatar2) 
+ "footer" (sdict "text" "Diese Nachricht wird in 5 Minuten automatisch gelöscht")}}
+
+{{$x := sendMessageRetID nil $embed }}
+{{deleteTrigger 1}}
+{{deleteMessage nil $x 600}}
+
+{{sleep 20}}
+{{$x2 := sendMessageRetID nil $embed2 }}
+{{addMessageReactions nil $x2 "👍" "🤝" "👎"}}
+{{deleteMessage nil $x2 300}}

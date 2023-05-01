@@ -1,0 +1,51 @@
+{{/*NSFW SCHALTFLÄCHE Made by Troy#8434*/}}
+{{$avatar1 := (joinStr "" "https://cdn.discordapp.com/emojis/712035798920462356.png?v=1")}}
+{{$embed1 := cembed 
+ "title" "Alright."
+ "description" "Dein Server hat NSFW Zeug.\n \n **Sende jetzt deinen Werbetext + Einladung und halte dich dabei an die Regeln.** Wenn du mit deinem Werbetext fertig bist, schreibe `-fertig` um das <@&422060086115041301> zu Benachrichtigen. Danach musst du nur noch ein wenig Geduld haben."
+ "color" 51
+ "thumbnail" (sdict "url" $avatar1) 
+ "footer" (sdict "text" "Diese Nachricht wird automatisch gelöscht, sobald du fortfährst.")}}
+
+{{$avatar2 := (joinStr "" "https://cdn.discordapp.com/emojis/712035798920462356.png?v=1")}}
+{{$embed2 := cembed 
+ "title" "Gut Gut"
+ "description" "Dein Server scheint wohl jugendfreundlich zu sein. \n \n **Sende jetzt deinen Werbetext + Einladung und halte dich dabei an die Regeln.** Wenn du mit deinem Werbetext fertig bist, schreibe `-fertig` um das <@&422060086115041301> zu Benachrichtigen. Danach musst du nur noch ein wenig Geduld haben."
+ "color" 51
+ "thumbnail" (sdict "url" $avatar2) 
+ "footer" (sdict "text" "Diese Nachricht wird automatisch gelöscht, sobald du fortfährst.")}}
+
+
+{{$action := .Reaction.Emoji.Name}}
+{{$validEmojis := cslice "👍" "👎"}}
+{{$isValid := false}}
+{{with and (eq .ReactionMessage.Author.ID 204255221017214977) .ReactionMessage.Embeds}}
+    {{$embed := index . 0}}
+    {{if and (eq $embed.Title "Hat dein Server NSFW oder Erotik Role Play (18+ Zeug)?") $embed.Footer}}
+        {{$isValid = true}}
+    {{end}}
+{{end}}
+{{if and (in $validEmojis $action) $isValid}}
+    {{deleteMessageReaction nil .ReactionMessage.ID .User.ID $action}}
+    {{if eq $action "👍"}} 
+        {{$x1 := sendMessageRetID nil $embed1}}
+        {{$x3 := joinStr "" "6.1) " .Channel.ID }}
+        {{$x4 := joinStr "" $x1}}
+        {{dbSetExpire (toInt64 .User.ID) $x3 $x4 604800}}
+        {{$y1 := joinStr "" "NSFW " .Channel.ID }}
+        {{dbSetExpire (toInt64 .User.ID) $y1 "aktiv" 604800}}
+    {{else}}
+        {{if eq $action "👎"}}
+            {{$x2 := sendMessageRetID nil $embed2}}
+            {{$x5 := joinStr "" "6.2) " .Channel.ID }}
+            {{$x6 := joinStr "" $x2}}
+            {{dbSetExpire (toInt64 .User.ID) $x5 $x6 604800}}
+        {{end}}
+    {{end}}
+{{end}}
+
+
+{{$x7 := joinStr "" "5.2) " .Channel.ID }}
+{{$x9 := (dbGet (toInt64 .User.ID) $x7).Value}}
+{{deleteMessage nil (toInt64 $x9)}}
+{{dbDel (toInt64 .User.ID) $x7}}

@@ -1,0 +1,52 @@
+{{$Anime := joinStr "" "<@692432675642015807>. Der Channel <#" (.Channel.ID) "> ist  nun fertig und gleich öffentlich. Bitte überprüfen. Er ist in der Ketegorie _Anime_"}}
+{{$BuT := joinStr "" "<@692432675642015807>. Der Channel <#" (.Channel.ID) "> ist  nun fertig und gleich öffentlich. Bitte überprüfen. Er ist in der Kategorie _Bots und Technik_"}}
+{{$Community := joinStr "" "<@692432675642015807>. Der Channel <#" (.Channel.ID) "> ist  nun fertig und gleich öffentlich. Bitte überprüfen. Er ist in der Kategorie _Community_"}}
+{{$Gaming := joinStr "" "<@692432675642015807>. Der Channel <#" (.Channel.ID) "> ist  nun fertig und gleich öffentlich. Bitte überprüfen. Er ist in der Kategorie _Gaming_"}}
+{{$KK := joinStr "" "<@298567636483309579>. Der Channel <#" (.Channel.ID) "> ist  nun fertig und gleich öffentlich. Bitte überprüfen. Er ist in der Kategorie _Kunst & Kreativität_"}}
+{{$RP := joinStr "" "<@298567636483309579>. Der Channel <#" (.Channel.ID) "> ist  nun fertig und gleich öffentlich. Bitte überprüfen. Er ist in der Kategorie _Rollenspiel_"}}
+{{$Werbung := joinStr "" "<@692432675642015807>. Der Channel <#" (.Channel.ID) "> ist  nun fertig und gleich öffentlich. Bitte überprüfen. Er ist in der Kategorie _Werbung_"}}
+{{$HT := joinStr "" "<@692432675642015807>. Der Channel <#" (.Channel.ID) "> ist  nun fertig und gleich öffentlich. Bitte überprüfen. Er ist in der Kategorie _Hilfe & Tipps_"}}
+
+
+
+{{ $action := .Reaction.Emoji.Name}}
+{{ $validEmojis := cslice "👀" "🌸" "🤖" "👯" "🎮" "🎨" "🎎" "🗃️" "📝"}}
+{{ $isValid := false }}
+{{ with and (eq .ReactionMessage.Author.ID 204255221017214977) .ReactionMessage.Embeds }}
+	{{ $embed := index . 0 }} {{/* The first embed */}}
+	{{ if and (eq $embed.Title "Bitte den Channel überprüfen und freischalten")}}
+		{{ $isValid = true }}
+	{{ end }}
+{{ end }}
+{{ if and (in $validEmojis $action) $isValid}}
+	{{ deleteMessageReaction nil .ReactionMessage.ID .User.ID $action }}
+	{{ if eq $action "👀" }} 
+		{{if hasRoleName "Team"}} {{addReactions "🌸" "🤖" "👯" "🎮" "🎨" "🎎" "🗃️" "📝"}}
+		{{ end }}
+	{{ else }}
+		{{ if eq $action "🌸" }} 
+			{{sendMessageNoEscape 775349376305725450 $Anime}} 
+		{{ end }}
+		{{ if eq $action "🤖" }} 
+			{{sendMessageNoEscape 775349376305725450 $BuT}}
+		{{ end }}
+		{{ if eq $action "👯" }} 
+			{{sendMessageNoEscape 775349376305725450 $Community}} 
+		{{ end }}
+		{{ if eq $action "🎮" }} 
+			{{sendMessageNoEscape 775349376305725450 $Gaming}}
+		{{ end }}
+		{{ if eq $action "🎨" }} 
+			{{sendMessageNoEscape 775349376305725450 $KK}} 
+		{{ end }}
+		{{ if eq $action "🎎" }} 
+			{{sendMessageNoEscape 775349376305725450 $RP}} 
+		{{ end }}
+		{{ if eq $action "🗃️" }} 
+			{{sendMessageNoEscape 775349376305725450 $Werbung}} 
+		{{ end }}
+		{{ if eq $action "📝" }} 
+			{{sendMessageNoEscape 775349376305725450 $HT}} 
+		{{ end }}
+	{{ end }} 
+{{ end }}

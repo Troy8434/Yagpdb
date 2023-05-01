@@ -1,0 +1,260 @@
+{{/*CUDDLE*/}}
+{{$gif := (joinStr "" ".")}}
+{{$var := randInt 1 100}}
+{{if lt $var 25}}
+    {{$gif = (joinStr "" "https://media.discordapp.net/attachments/861618411971543040/861618776058232832/tenor.gif?width=432&height=243")}}
+{{else if lt $var 55}}
+    {{$gif = (joinStr "" "https://media.discordapp.net/attachments/861618411971543040/861619363663839242/tenaaor.gif?width=432&height=243")}}
+{{else if lt $var 75}}
+    {{$gif = (joinStr "" "https://media.discordapp.net/attachments/861618411971543040/861619366239928340/tenosr.gif?width=448&height=448")}}
+{{else}}
+    {{$gif = (joinStr "" "https://media.discordapp.net/attachments/861618411971543040/861619405028720660/tenaaqor.gif?width=288&height=216")}}
+{{end}}
+
+{{if gt (len .Args) 1}}
+    {{if not (userArg (index .Args 1))}}
+        {{joinStr "" .User.Mention " knuddelt" .StrippedMsg}}
+    {{end}}
+    {{with (userArg (index .Args 1))}}
+        {{$embed1 := cembed 
+        "description" (joinStr "" $.User.Mention " knuddelt " .Mention  " ganz doll  <:milkheart:673238166110601251> ")
+        "image" (sdict "url" $gif)}}
+       {{sendMessage nil $embed1}}
+    {{end}}
+{{else}}
+    {{$embed2 := cembed 
+     "description" (joinStr "" .User.Mention " da du keinen User erwähnt hast, knuddel ich mit dir. <:milkcuddle:673238167515561984>")
+     "image" (sdict "url" $gif)}}
+   {{sendMessage nil $embed2}}
+{{end}} 
+{{deleteTrigger 5}}
+
+
+
+
+
+
+
+{{/*HUG*/}}
+{{$gif := (joinStr "" ".")}}
+{{$var := randInt 1 100}}
+{{if lt $var 20}}
+    {{$gif = (joinStr "" "https://media.discordapp.net/attachments/861618411971543040/861622523951185920/tenoQr.gif?width=448&height=448")}}
+{{else if lt $var 40}}
+    {{$gif = (joinStr "" "https://media.discordapp.net/attachments/861618411971543040/861622531328835604/tenaaor.gif?width=448&height=281")}}
+{{else if lt $var 60}}
+    {{$gif = (joinStr "" "https://media.discordapp.net/attachments/861618411971543040/861622545715298335/teAAWnor.gif?width=331&height=270")}}
+{{else if lt $var 80}}
+    {{$gif = (joinStr "" "https://media.discordapp.net/attachments/861618411971543040/864471345672880128/tenor.gif?width=403&height=225")}}
+
+{{else}}
+    {{$gif = (joinStr "" "https://media.discordapp.net/attachments/861618411971543040/861622728766783518/tenorSSS.gif?width=448&height=247")}}
+{{end}}
+
+{{if gt (len .Args) 1}}
+    {{if not (userArg (index .Args 1))}}
+        {{joinStr "" .User.Mention " umarmt einfach" .StrippedMsg}}
+    {{end}}
+    {{with (userArg (index .Args 1))}}
+        {{$embed1 := cembed 
+        "description" (joinStr "" $.User.Mention " zieht " .Mention  " in eine Umarmung!  <:milkcuddle:673238167515561984>")
+        "image" (sdict "url" $gif)}}
+       {{sendMessage nil $embed1}}
+    {{end}}
+{{else}}
+    {{$embed2 := cembed 
+     "description" (joinStr "" .User.Mention ", da du keinen User erwähnt hast, werfe ich mich einfach in die Umarmung. <:ghosthug:496329325209976852>")
+     "image" (sdict "url" $gif)}}
+   {{sendMessage nil $embed2}}
+{{end}} 
+{{deleteTrigger 5}}
+
+
+
+
+
+
+
+{{/*SLAP*/}}
+{{$gif := (joinStr "" ".")}}
+{{$var := randInt 1 100}}
+{{if lt $var 25}}
+    {{$gif = (joinStr "" "https://media.discordapp.net/attachments/861618411971543040/861627555291332648/tenor.gif?width=383&height=216")}}
+{{else if lt $var 55}}
+    {{$gif = (joinStr "" "https://media.discordapp.net/attachments/861618411971543040/861627573821767680/3tenor.gif?width=304&height=180")}}
+{{else if lt $var 75}}
+    {{$gif = (joinStr "" "https://media.discordapp.net/attachments/861618411971543040/861627581597220864/2tenor.gif?width=448&height=334")}}
+{{else}}
+    {{$gif = (joinStr "" "https://media.discordapp.net/attachments/861618411971543040/861627601772740638/1tenor.gif?width=279&height=180")}}
+{{end}}
+
+{{$hallo := joinStr "" "<@204255221017214977> schlägt " .User.Mention  ". Hey, du sollst hier keine anderen Schlagen! <:w00t:496319752562671636>"}}
+
+{{$isGlobal := 0}}
+{{$name := "slap"}}
+{{$lengthSec := 3600}}
+
+{{$id := 0}}
+{{$key := joinStr "" "cooldown_" $name}}
+{{if eq $isGlobal 0}}
+    {{$id = .User.ID}}
+{{end}}
+
+
+{{if dbGet (toInt64 $id) $key}} 
+    {{sendMessage nil $hallo}}
+{{else}}
+    {{dbSetExpire (toInt64 $id) $key "cooldown" $lengthSec}}
+    {{if gt (len .Args) 1}}
+        {{if not (userArg (index .Args 1))}}
+            {{joinStr "" .User.Mention " haut einfach" .StrippedMsg}}
+        {{end}}
+        {{with (userArg (index .Args 1))}}
+            {{$embed1 := cembed 
+            "description" (joinStr "" $.User.Mention " haut " .Mention  "! Das hast du jetzt davon <:PandaDevil:476772975727869962>")
+            "image" (sdict "url" $gif)}}
+           {{sendMessage nil $embed1}}
+        {{end}}
+    {{else}}
+        {{$embed2 := cembed 
+         "description" (joinStr "" .User.Mention " da du keinen User erwähnt hast, haue ich dich dafür <:spazdunno:496319799400333323>")
+         "image" (sdict "url" $gif)}}
+       {{sendMessage nil $embed2}}
+    {{end}} 
+    {{deleteTrigger 5}}
+{{end}}
+
+
+
+
+
+
+
+{{/*PAT*/}}
+{{$gif := (joinStr "" ".")}}
+{{$var := randInt 1 99}}
+{{if lt $var 33}}
+    {{$gif = (joinStr "" "https://media.discordapp.net/attachments/861618411971543040/861630021810913341/4tenor.gif?width=448&height=293")}}
+{{else if lt $var 66}}
+    {{$gif = (joinStr "" "https://media.discordapp.net/attachments/861618411971543040/861630032328785980/5tenor.gif?width=448&height=310")}}
+{{else}}
+    {{$gif = (joinStr "" "https://media.discordapp.net/attachments/861618411971543040/861630040496275527/6tenor.gif?width=448&height=363")}}
+{{end}}
+
+{{if gt (len .Args) 1}}
+    {{if not (userArg (index .Args 1))}}
+        {{joinStr "" .User.Mention " tätschelt" .StrippedMsg}}
+    {{end}}
+    {{with (userArg (index .Args 1))}}
+        {{$embed1 := cembed 
+        "description" (joinStr "" $.User.Mention " tätschelt " .Mention  " <:HeadPat:476768757801549834>")
+        "image" (sdict "url" $gif)}}
+       {{sendMessage nil $embed1}}
+    {{end}}
+{{else}}
+    {{$embed2 := cembed 
+     "description" (joinStr "" .User.Mention ", da du keinen User erwähnt hast, wirst du nun von mir getätschelt. <:loveahri:499277628239511573>")
+     "image" (sdict "url" $gif)}}
+   {{sendMessage nil $embed2}}
+{{end}} 
+{{deleteTrigger 5}}
+
+
+
+
+
+
+
+{{/*HIGH FIVE*/}}
+{{$gif := (joinStr "" ".")}}
+{{$var := randInt 1 100}}
+{{if lt $var 25}}
+    {{$gif = (joinStr "" "https://media.discordapp.net/attachments/861618411971543040/864473691974402068/tenor4.gif?width=268&height=409")}}
+{{else if lt $var 50}}
+    {{$gif = (joinStr "" "https://media.discordapp.net/attachments/861618411971543040/864473669928222760/tenor1.gif?width=448&height=208")}}
+{{else if lt $var 75}}
+    {{$gif = (joinStr "" "https://media.discordapp.net/attachments/861618411971543040/864473660396273683/tenor5.gif?width=448&height=224")}}
+{{else}}
+    {{$gif = (joinStr "" "https://media.discordapp.net/attachments/861618411971543040/864473658826424340/tenor2.gif?width=448&height=263")}}
+{{end}}
+
+{{if gt (len .Args) 1}}
+    {{with (userArg (index .Args 1))}}
+        {{$embed1 := cembed 
+        "description" (joinStr "" $.User.Mention " macht mit " .Mention  "  Highfive! Yeah, schlag ein  <:haiya:496332744855650335>")
+        "image" (sdict "url" $gif)}}
+       {{sendMessage nil $embed1}}
+    {{end}}
+{{else}}
+    {{$gif = (joinStr "" "https://media.discordapp.net/attachments/861618411971543040/864473649385439262/tenor3.gif?width=157&height=157")}}
+    {{$embed2 := cembed 
+     "description" (joinStr "" .User.Mention ", da du keinen User erwähnt hast, \nmusst du wohl mit dir selbst Highfive machen <:sweetlaugh:673223806449352714>")
+     "image" (sdict "url" $gif)}}
+   {{sendMessage nil $embed2}}
+{{end}} 
+{{deleteTrigger 5}}
+
+
+
+
+
+
+
+{{/*TICKLE*/}}
+{{$gif := (joinStr "" ".")}}
+{{$var := randInt 1 99}}
+{{if lt $var 33}}
+    {{$gif = (joinStr "" "https://media.discordapp.net/attachments/861618411971543040/864481650800328754/2tenor.gif?width=448&height=248")}}
+{{else if lt $var 66}}
+    {{$gif = (joinStr "" "https://media.discordapp.net/attachments/861618411971543040/864481659793571860/1tenor.gif?width=448&height=224")}}
+{{else}}
+    {{$gif = (joinStr "" "https://media.discordapp.net/attachments/861618411971543040/864481748279623720/3tenor.gif?width=410&height=301")}}
+{{end}}
+
+{{if gt (len .Args) 1}}
+    {{with (userArg (index .Args 1))}}
+        {{$embed1 := cembed 
+        "description" (joinStr "" $.User.Mention " kitzelt " .Mention  "  ordentlich durch! <:Awsome:477152309286273034> ")
+        "image" (sdict "url" $gif)}}
+       {{sendMessage nil $embed1}}
+    {{end}}
+{{else}}
+    {{$embed2 := cembed 
+     "description" (joinStr "" .User.Mention ", da du keinen User erwähnt hast, kitzel ich dich jetzt. <:sweetlaugh:673223806449352714>")
+     "image" (sdict "url" $gif)}}
+   {{sendMessage nil $embed2}}
+{{end}} 
+{{deleteTrigger 5}}
+
+
+
+
+
+{{/*HOT CHOCOLATE Made by Troy#8434*/}}
+{{$gif := "."}}
+{{$var2 := randInt 1 99}}
+{{if le $var2 33}}
+    {{$gif = (joinStr "" "https://media.discordapp.net/attachments/861618411971543040/917027144943693834/d2b3e4c47d6ea66eb58911c73475f57c.gif?width=450&height=253")}}
+{{else if le $var2 66}}
+    {{$gif = (joinStr "" "https://media.discordapp.net/attachments/861618411971543040/917027239479087114/xj2etA8.gif?width=655&height=353")}}
+{{else}}
+    {{$gif = (joinStr "" "https://4.bp.blogspot.com/--wxsENn5w-Q/WoYnuJtHnhI/AAAAAAABF3o/3wF0GQ7NbB0A8TLYwRwyT1j6skkJvKaygCKgBGAs/s1600/Omake%2BGif%2BAnime%2B-%2BYuru%2BCamp%2B-%2BEpisode%2B7%2B-%2BNadeshiko%2BRin%2BDrink%2BHot%2BChocolate.gif")}}
+{{end}}
+{{$M := joinStr "" .User.Mention ", du hast keinen User erwähnt 👀"}}
+{{$args := parseArgs 1 $M
+ (carg "user" "Chocolatenuser")}}
+
+
+ {{if gt (len .Args) 1}}
+    {{with (userArg (index .Args 1))}}
+        {{$embed1 := cembed 
+        "description" (joinStr "" $.User.Mention "  teilt sich eine heiße Schokolade mit " .Mention  " <:lexi_smile:914588659867615263>")
+        "color" 51
+        "image" (sdict "url" $gif)}}
+        {{sendMessage nil $embed1}}
+        {{deleteTrigger 1}}
+        {{removeRoleID "916798950554632212"}}
+    {{end}}
+{{else}}
+    {{sendMessage nil $M}}
+{{end}}

@@ -1,0 +1,22 @@
+{{ $action := .Reaction.Emoji.Name}}
+{{ $validEmojis := cslice "📩"}}
+{{ $isValid := false }}
+
+{{ with and (eq .ReactionMessage.ID 763004687532163082 ) .ReactionMessage.Embeds }}
+    {{ $embed := index . 0 }} {{/* The first embed */}}
+    {{ if and (eq $embed.Title "**How to Partner**")}}
+        {{ $isValid = true }}
+    {{ end }}
+{{ end }}
+
+
+
+{{ if and (in $validEmojis $action) $isValid}}
+    {{ deleteMessageReaction nil .ReactionMessage.ID .User.ID $action }}
+    {{ if eq $action "📩" }} 
+        {{$x :=exec "ticket open" (print .User.Username)}}
+    {{ else }}
+    {{ end }} 
+{{ end }}
+
+

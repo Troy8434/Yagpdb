@@ -1,0 +1,16 @@
+{{$x1 := (dbGet (toInt64 0) "key 1").Value}}
+{{$x2 := (dbGet (toInt64 0) "key 2").Value}}
+{{$x3 := (dbGet (toInt64 0) "key 3").Value}}
+{{$x4 := (dbGet (toInt64 0) "key 4").Value}}
+{{$x5 := (dbGet (toInt64 0) "key 5").Value}}
+
+{{if $x1}}
+    {{$y1 := joinStr "" "<@&894188060747636736> \n" $x1 "\n" $x2 "\n" $x3 "\n" $x4 "\n" $x5}}
+    {{sendMessageNoEscape 894190177260556359 $y1}}
+
+    {{dbDel (toInt64 0) "key 1"}}
+    {{dbDel (toInt64 0) "key 2"}}
+    {{dbDel (toInt64 0) "key 3"}}
+    {{dbDel (toInt64 0) "key 4"}}
+    {{dbDel (toInt64 0) "key 5"}}
+{{end}}

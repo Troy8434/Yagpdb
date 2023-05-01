@@ -1,0 +1,95 @@
+{{/*SCHNÜFFLER Made by Troy#8434*/}}
+{{$x := "."}}
+{{$1 := "."}}
+{{$action := .Reaction.Emoji.Name}}
+{{$validEmojis := cslice "👀" "🌸" "🤖" "👯" "🎮" "🎨" "🎎" "🗃️" "📝" "📚"}}
+{{$isValid := false}}
+{{with and (eq .ReactionMessage.Author.ID 204255221017214977) .ReactionMessage.Embeds}}
+	{{$embed := index . 0 }}
+	{{if and (eq $embed.Title "Bitte den Channel überprüfen, freischalten und in #neue-server einspeisen")}}
+		{{$isValid = true}}
+	{{end}}
+{{end}}
+{{if and (in $validEmojis $action) $isValid}}
+	{{deleteMessageReaction nil .ReactionMessage.ID .User.ID $action}}
+	{{if eq $action "👀"}} 
+		{{if hasRoleName "Team"}} 
+			{{addReactions "🌸" "🤖" "👯" "🎮" "🎨" "🎎" "🗃️" "📝" "📚"}} 
+		{{end }}
+		{{else}}
+		{{if eq $action "🌸"}}
+			{{$x = "Anime"}}
+		{{end}}
+		{{if eq $action "🤖"}}
+			{{$x = "Bots und Technik"}}
+		{{end}}
+		{{if eq $action "👯"}}
+			{{$x = "Community"}}
+		{{end}}
+		{{if eq $action "🎮"}}
+			{{$x = "Gaming"}}
+		{{end}}
+		{{if eq $action "🎨"}}
+			{{$x = "Kunst und Kreativität"}}
+		{{end}}
+		{{if eq $action "🗃️"}}
+			{{$x = "Werbung"}}
+		{{end}}
+		{{if eq $action "📝"}}
+			{{$x = "Hilfe und Tipps"}}
+		{{end}}
+		{{if eq $action "📚"}}
+			{{$x = "Bildung"}}
+		{{end}} 
+		{{if eq $action "🎎"}}
+			{{if eq .Channel.ParentID 971027139929468979}}
+				{{$x = "RP GTA"}}
+			{{else if eq .Channel.ParentID 910160101460025445}}
+				{{$x = "RP Pen & Paper"}}
+			{{else if eq .Channel.ParentID 882352218928480286}}
+				{{$x = "RP Historisch"}}
+			{{else if eq .Channel.ParentID 882333225287053342}}
+				{{$x = "RP Fantasy"}}			
+			{{else if eq .Channel.ParentID 1005846508991680533}}
+				{{$x = "RP Fantasy"}}
+			{{else if eq .Channel.ParentID 882347191384014968}}
+				{{$x = "RP Sci-Fi"}}
+			{{else if eq .Channel.ParentID 882347300129763459}}
+				{{$x = "RP Franchise & Fanfiction"}}			
+			{{else if eq .Channel.ParentID 961001101530910760}}
+					{{$x = "RP Franchise & Fanfiction"}}
+			{{else if eq .Channel.ParentID 882342606506434631}}
+				{{$x = "RP Slice of life"}}
+			{{else if eq .Channel.ParentID 669490160693411881}}
+				{{$x = "RP Sonstiges"}}
+			{{end}}
+		{{end}}
+	{{end}}
+{{end}}
+
+{{if and (in $validEmojis $action) $isValid}}
+	{{if not (eq $action "👀")}}
+		{{$anc := joinStr "" "Der Server <#" .Channel.ID "> ist aus der Erstellung raus. Er ist in der Kategorie **" $x "** zu finden!"}}
+		{{$User := (toInt64 0)}}
+		{{if not (dbGet $User "key 1")}}
+			{{dbSet $User "key 1" $anc}}
+		{{else if not (dbGet $User "key 2")}}
+			{{dbSet $User "key 2" $anc}}
+		{{else if not (dbGet $User "key 3")}}
+			{{dbSet $User "key 3" $anc}}
+		{{else if not (dbGet $User "key 4")}}
+			{{dbSet $User "key 4" $anc}}
+		{{else if not (dbGet $User "key 5")}}
+			{{dbSet $User "key 5" $anc}}
+			{{execCC 57 891599740389691412 1 $User}}
+		{{end}}
+	{{end}}
+{{end}}
+	
+	{{/*{{$msg := joinStr "" $1 ". Der Channel <#" (.Channel.ID) "> ist  nun fertig und bereit zum überprüft werden. Er ist in der Kategorie **" $x "**."}}
+	{{sendMessageNoEscape 775349376305725450 $msg}}
+
+	{{$x7 := joinStr "" "7) " .Channel.ID }}
+	{{$x9 := (dbGet (toInt64 .User.ID) $x7).Value}}
+	{{deleteMessage nil (toInt64 $x9)}}
+	{{dbDel (toInt64 .User.ID) $x7}}*/}}

@@ -1,0 +1,12 @@
+{{$media:=0}}
+{{range .Message.Attachments}}
+    {{$media =1}}
+{{else}}
+    {{if reFind `http` .Message.Content}}
+    {{$media =1}}
+{{end}}
+{{end}}
+{{if not $media}}
+    {{deleteTrigger 0}}
+{{end}} 
+{{addReactions "👍" ":shrugging:720630876865822910" "👎"}}

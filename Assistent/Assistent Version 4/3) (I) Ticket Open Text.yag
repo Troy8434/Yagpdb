@@ -1,0 +1,19 @@
+{{/*TICKET OPEN TEXT Made by Troy#8434*/}}
+{{$avatar := (joinStr "" "https://cdn.discordapp.com/emojis/711993392879370331.png?v=1") }}
+{{$x1 := sendMessageRetID nil (complexMessage
+ "content" .User.Mention
+ "embed" (cembed 
+ "title" "Lass uns starten"
+ "description" " So, dann lass uns mal deinen Channel einrichten. Fange bitte zuerst damit an deinen Channel umzubenennen... \n \n Oh. Da habe ich doch wohl schon wieder vergessen mich Vorzustellen. \n Ich bin Lexicat, das Servermaskotchen und werde dir bei der Erstellung deines Werbechannels helfen. Folge einfach den Anweisungen.  \n \n Also wie ich schon sagte. Du solltest damit anfangen deinen Channel zu benennen. Das kannst du mit dem Befehl `-setname (Servername)`. \n \n Und ja, bei Servername solltest du den Namen deines Servers einfügen. "
+ "color" 51
+ "thumbnail" (sdict "url" $avatar) 
+ "footer" (sdict "text" "Diese Nachricht wird automatisch gelöscht, sobald du fortfährst.")
+)
+)
+}}
+{{$x2 := joinStr "" "Vorsteller: <@" .User.ID ">. \nUm diesen Channel wieder zu schließen, schreibe: -ticket close"}}
+{{editChannelTopic nil $x2}}
+
+{{$x3 := joinStr "" "3) " .Channel.ID }}
+{{$x4 := joinStr "" $x1}}
+{{dbSetExpire (toInt64 .User.ID) $x3 $x4 604800}}

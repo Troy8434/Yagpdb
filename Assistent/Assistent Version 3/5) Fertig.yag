@@ -1,0 +1,50 @@
+{{$x4 := cembed
+ "title" "Dieser Server bietet NSFW Inhalte."
+ "color" 51
+}}
+
+{{$avatar := (joinStr "" "https://cdn.discordapp.com/emojis/730810055657652234.png?v=1")}}
+{{$embed := cembed 
+ "title" "Wie würdest du diesen Server bewerten?"
+ "description" " ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬ \n <:1Stern:801035186027888671> = Ein Stern = sehr schlecht \n <:2Stern:801035202246737940> = Zwei Sterne = gefällt mir nicht \n <:3Stern:801035210048798781> = Drei Sterne = mäßig \n <:4Stern:801035220710981682> = Vier Sterne = gefällt mir \n <:5Stern:801035229790863370> = Fünf Sterne = sehr gut"
+ "color" 51
+ "thumbnail" (sdict "url" $avatar) 
+ "footer" (sdict "text" "Bitte bewertet den Server fair.")
+}}
+
+
+
+{{$haha := (complexMessage
+ "content" "<@&422060086115041301>"
+ "embed" (cembed 
+ "title" "Bitte den Channel überprüfen und freischalten"
+ "color" 51
+ "footer" (sdict "text" "Hier die Nachricht für die Schnüffler triggern")
+)
+)
+}}
+
+
+{{$isGlobal := 0}}
+{{$name := "Fertig-Ping-Cooldown"}}
+{{$lengthSec := 60}}
+
+{{$id := 0}}
+{{$key := joinStr "" "cooldown_" $name}}
+{{if eq $isGlobal 0}}
+    {{$id = .User.ID}}
+{{end}}
+
+
+{{if dbGet (toInt64 $id) $key}} 
+{{else}}
+    {{dbSetExpire (toInt64 $id) $key "cooldown" $lengthSec}}
+    {{deleteTrigger 1}}
+    {{sendMessage nil $haha }}
+    {{$x := sendMessageRetID nil $embed }}
+    {{addMessageReactions nil $x "1Stern:801035186027888671" "2Stern:801035202246737940" "3Stern:801035210048798781" "4Stern:801035220710981682" "5Stern:801035229790863370"}}
+    {{if hasRoleID 837618191693381682}}
+        {{sendMessage nil $x4}}
+        {{removeRoleID 837618191693381682}}
+    {{end}}
+{{end}}

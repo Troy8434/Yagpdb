@@ -1,0 +1,24 @@
+{{/*SETNAME Made by Troy#8434*/}}
+{{editChannelName nil (joinStr "" "" (.StrippedMsg))}}
+{{$avatar := (joinStr "" "https://cdn.discordapp.com/emojis/730809897452568756.png?v=1")}}
+{{$embed := cembed 
+ "title" "Gut gemacht. Dein Channel hat nun einen neuen Namen."
+ "description" "Um mit dem nächsten Schritt fortzufahren, schreibe bitte `-weiter`. \n Dort werden alle wichtigen Vorraussetzungen und Regeln für das Werben kurz zusammengefasst. Wenn du willst, kannst du auch die längere und ausführliche Version in <#656434990493728769> und <#819139703558635530> lesen und danach `-weiter` schreiben."
+ "color" 51
+ "thumbnail" (sdict "url" $avatar) 
+ "footer" (sdict "text" "Diese Nachricht wird automatisch gelöscht, sobald du fortfährst.")}}
+
+{{$x1 := sendMessageRetID nil $embed}}
+{{deleteTrigger 1}}
+{{addRoleID "656445638942130187"}}
+{{removeRoleID "656434185161932820"}}
+
+
+{{$x3 := joinStr "" "3) " .Channel.ID }}
+{{$x4 := (dbGet (toInt64 .User.ID) $x3).Value}}
+{{deleteMessage nil (toInt64 $x4)}}
+{{dbDel (toInt64 .User.ID) $x3}}
+
+{{$x5 := joinStr "" "4) " .Channel.ID }}
+{{$x6 := joinStr "" $x1}}
+{{dbSetExpire (toInt64 .User.ID) $x5 $x6 604800}}

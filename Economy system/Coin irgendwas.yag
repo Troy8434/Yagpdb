@@ -1,0 +1,152 @@
+{{/*BAL Made by Troy#8434*/}}
+{{$User := (toInt64 .User.ID)}}
+{{$Pocket := "Pocket"}}
+{{$Bank := "Bank"}}
+{{$v1 := .User.String}}
+{{$v2 := (joinStr "" "https://cdn.discordapp.com/avatars/" (toString .User.ID) "/" .User.Avatar ".png")}}
+
+{{$x1 := dbGet $User $Pocket}}
+{{$x2 := dbGet $User $Bank}}
+
+{{$embed := cembed
+ "title" (joinStr "" .User.Username "'s Balance" )
+ "description" (joinStr "" "Pocket Money: **" ($x1.Value) " <:coins:721345966984396831>**\nBank Money: **" ($x2.Value) " <:coins:721345966984396831>** \nGesammt: **" (add ($x1.Value) ($x2.Value)) " <:coins:721345966984396831>**")
+ "color" 51
+ "footer" (sdict "text" $v1 "icon_url" $v2)
+}}
+{{sendMessage nil $embed}}
+
+
+
+
+
+
+
+{{/*WORK Made by Troy#8434*/}}
+{{$User := (toInt64 .User.ID)}}
+{{$Pocket := "Pocket"}}
+{{$Bank := "Bank"}}
+{{$v1 := .User.String}}
+{{$v2 := (joinStr "" "https://cdn.discordapp.com/avatars/" (toString .User.ID) "/" .User.Avatar ".png")}}
+{{$var := randInt 100 500}}
+{{$Cooldown := "Work"}}
+
+{{if dbGet $User $Cooldown}}
+    {{$embed2 := cembed
+     "description" (joinStr "" "Bitte warte noch " (humanizeDurationSeconds ((dbGet $User $Cooldown).ExpiresAt.Sub currentTime)) " bevor du wieder Coins for free abstauben kannst")
+     "color" 51
+     "footer" (sdict "text" $v1 "icon_url" $v2)
+    }}
+    {{sendMessage nil $embed2}}
+{{else}}
+    {{$embed1 := cembed
+     "description" (joinStr "" "Eigentlich hast du nichts getan, aber hier bekommst du trotzdem " $var " <:coins:721345966984396831>")
+     "color" 51
+     "footer" (sdict "text" $v1 "icon_url" $v2)
+    }}
+    {{$hide := dbIncr $User $Pocket $var}}
+    {{sendMessage nil $embed1}}
+    {{dbSetExpire $User $Cooldown "true" 7200}}
+{{end}}
+
+
+
+
+
+
+
+
+
+
+{{/*DEP Made by Troy#8434*/}}
+{{$User := (toInt64 .User.ID)}}
+{{$Pocket := "Pocket"}}
+{{$Bank := "Bank"}}
+{{$v1 := .User.String}}
+{{$v2 := (joinStr "" "https://cdn.discordapp.com/avatars/" (toString .User.ID) "/" .User.Avatar ".png")}}
+{{$res := "."}}
+
+{{$x1 := dbGet $User $Pocket}}
+{{$x2 := dbGet $User $Bank}}
+
+{{if or (eq (index .CmdArgs 0) "all") (eq (index .CmdArgs 0) "All") (eq (index .CmdArgs 0) "ALl") (eq (index .CmdArgs 0) "ALL") (eq (index .CmdArgs 0) "aLl") (eq (index .CmdArgs 0) "alL") (eq (index .CmdArgs 0) "ALl")}} 
+    {{if gt (toInt ($x1.Value)) 0}}
+        {{$hide := dbIncr $User $Bank ($x1.Value)}}
+        {{$hide2 := dbSet $User $Pocket 0}}
+        {{$res = (joinStr "" "Du hast soeben **" ($x1.Value) "** <:coins:721345966984396831> zur Bank gebracht")}}
+    {{end}}
+{{else if (and (le (toInt (index .CmdArgs 0)) (toInt ($x2.Value))) (gt (toInt ($x1.Value)) 0))}}
+    {{$hide3 := dbIncr $User $Bank (index .CmdArgs 0)}}
+    {{$hide4 := dbIncr $User $Pocket (toInt (joinStr "" "-" (index .CmdArgs 0)))}}
+    {{$res = (joinStr "" "Du hast soeben **" (index .CmdArgs 0) "** <:coins:721345966984396831> zur Bank gebracht")}}
+{{else}}
+    {{$res = "Entweder hast du nicht so viele Coins, wie du gerne zur Bank bringen möchtest, oder du hast irgendwas falsch geschrieben"}}
+{{end}}
+
+{{$embed := cembed
+"description" $res
+"color" 51
+"footer" (sdict "text" $v1 "icon_url" $v2)
+}}
+{{sendMessage nil $embed}}
+
+
+
+
+
+
+
+{{/*WITH Made by Troy#8434*/}}
+if arg 1 eq "all" --> getdb und with alles
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{{/*MÜNZWURF Made by Troy#8434*/}}
+49 Chance auf Kopf, 49 Chance auf Zahl, 1 Chance, dass die Münze auf der Kante Landet, 1 Chance, dass die Münze vom Tisch fliegt
+
+{{/*SHOP Made by Troy#8434*/}}
+ EInfach nur Embed mit den Verschiedenen Items
+
+{{/*BUY Made by Troy#8434*/}}
+Für Event Items auf jedenfall Einzelne Commands --> -buy Item1
+
+
+{{/*CRIME Made by Troy#8434*/}}
+- randInt für Amount und noch eine RandInt um zu gucken ob Minus oder +. Cooldown 4h
+
+{{/*ROB Made by Troy#8434*/}}
+- randInt mit Chance erwischt zu werden. RandInt mit Strafgeld oder Prozentmäßig?
+
+
+{{/*Tägliches Einsammeln von Speziellen Rollen mit dem Collect Command*/}}
+DBset Expire?
+
+
+

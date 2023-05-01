@@ -1,0 +1,10 @@
+{{/*Content*/}}
+<a:name:894205142872756324> Wenn du einen Channel beantragst, wird dich ein Assistent durch die verschiedenen Stufen führen. Bitte folge den Anweisungen des Assistenten. Solltest du nicht weiterkommen, benachrichtige bitte jemanden aus dem <@&422060086115041301>.
+<a:name:894205142872756324> Der Assistent wird eine Zusammenfassung der wichtigsten Regeln zum Werben bereitstellen. Wenn du die ausführlichere und verständlichere Version lesen möchtest empfehlen wir einen Blick in <#656434990493728769>, <#669484824301535242> und <#819139703558635530> zu werfen. ||Die Regeln solltest du sowieso kennen.||
+<a:name:894205142872756324> Klicke auf das 📩 Emoji weiter unten um deinen Channel zu beantragen. 
+<a:name:894205142872756324> Sobald dein Channel offen ist, kann der Prozess beginnen.
+
+{{/*Image*/}}
+https://media.discordapp.net/attachments/861618411971543040/894214929421320233/Channelanfrage.png?width=687&height=223
+
+{{/*Siehe https://discord.club/dashboard/messages > Lexikon: Channelanfrage für die Umsetzung mit Webhook. Das geht leider nicht mit YAG*/}}

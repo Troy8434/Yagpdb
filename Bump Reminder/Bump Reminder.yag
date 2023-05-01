@@ -1,0 +1,70 @@
+{{/*REMINDER Made by Troy#8434*/}}
+{{$x1 := (currentTime).Sub (.Message.Timestamp.Parse)}}
+{{$time := $x1.Seconds  |toInt}}
+{{$x2 := 7200}}
+{{$time2 := (sub $x2 $time)}}
+{{$msg := .Reaction.MessageID}}
+
+
+{{$variable := .Reaction.MessageID}}
+
+{{$action := .Reaction.Emoji.Name}}
+{{$validEmojis := cslice "🔔"}}
+{{$isValid := false }}
+
+
+{{if not (dbGet (toInt64 0) "Bumps")}}
+    {{with and (eq .ReactionMessage.Author.ID 302050872383242240) .ReactionMessage.Embeds}}
+        {{$embed := index . 0}}
+        {{if eq $embed.Title "DISBOARD: Die öffentliche Serverliste"}}
+            {{$isValid = true}}
+        {{else if eq $embed.Title "DISBOARD: The Public Server List"}}
+            {{$isValid = true}}
+        {{else if eq $embed.Title "DISBOARD : La liste des serveurs publics"}}
+            {{$isValid = true}}
+        {{else if eq $embed.Title "DISBOARD: La Lista Di Server Pubblici"}}
+            {{$isValid = true}}
+        {{end}}
+    {{end}}
+    
+    {{if and (in $validEmojis $action) $isValid}}
+        {{if eq $action "🔔"}}
+            {{addMessageReactions nil $msg "⏳"}}
+            {{if le $time2 0}}
+                {{$time2 = 1}}
+            {{end}}     
+            {{execCC 16 nil $time2 $variable}}
+            {{dbSet (toInt64 0) "Bumps" "aktiv"}}
+        {{else}}
+        {{end}}
+    {{end}}
+{{end}}
+
+
+
+
+
+
+
+{{/*ERINNERUNG Made by Troy#8434*/}}
+{{$msg := .ExecData}}
+{{$emoji := "."}}
+{{$var := randInt 1 6}}
+{{if eq $var 1}}
+    {{$emoji = ":ja:730810177099399211"}}
+{{else if eq $var 2}}
+    {{$emoji = "👍"}}
+{{else if eq $var 3}}
+    {{$emoji = ":salute:720630287469510729"}}
+{{else if eq $var 4}}
+    {{$emoji = ":babarian:789867975045677076"}}
+{{else if eq $var 5}}
+    {{$emoji = ":cat:946872769616941096"}}
+{{else}}
+    {{$emoji = ":builder:720660026401751140"}}
+{{end}}
+{{deleteAllMessageReactions nil $msg}}
+{{addMessageReactions nil $msg $emoji}}
+
+{{dbDel (toInt64 0) "Bumps"}}
+{{sendMessage nil "I guess someone can Bump again, right?"}}

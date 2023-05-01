@@ -1,0 +1,57 @@
+{{ $avatar1 := (joinStr "" "https://cdn.discordapp.com/emojis/712035798920462356.png?v=1") }}
+{{$embed1 := cembed 
+ "title" "Alright."
+ "description" "Dein Server hat NSFW Zeug, aber du bist schon verifiziert. \n \n Sende jetzt deinen Werbetext und die Einladung. Halte dich an die Regeln aus der vorletzten Nachricht. Wenn du mit deinem Werbetext fertig bist, schreibe `-fertig` um das <@&422060086115041301> zu Benachrichtigen. Jetzt musst du nur noch ein wenig Geduld haben."
+ "color" 51
+ "thumbnail" (sdict "url" $avatar1) 
+ "footer" (sdict "text" "Team, diese Nachricht bitte vor dem Veröffentlichen löschen.")}}
+
+{{ $avatar2 := (joinStr "" "https://cdn.discordapp.com/emojis/712035798920462356.png?v=1") }}
+{{$embed2 := cembed 
+ "title" "Bitte befolge diese Schritte um dich zu verifizieren"
+ "description" "Um also einen Server mit 18+ Inhalten zu bewerben brauchst du die <@&669486466363162625> Rolle. \n \n  Diese Rolle bekommst du, wenn du über 18 Jahre alt bist und das auch beweisen kannst. \n Zum Beweisen fordern wir ein Bild von deinem Ausweis und ein Bild von deinem Gesicht. Auf dem Ausweis dürfen alle Daten bis auf das Geburtsdatum und das Bild geschwärzt / verpixelt sein. Bei dem Bild von deinem Gesicht muss erkennbar sein, dass es sich um die selbe Person, wie auf dem Ausweis handelt. \n Zum Verifizieren schickst du diese beiden Bilder bitte an <@303966855452950529> oder <@502941014697181191>.\n \n Wenn du verifiziert bist, können die Bilder gelöscht werden. Sie werden nirgendwo gespeichert. \n Wenn du nicht über 18 bist oder dich nicht verifizieren möchtest, kann das auch jemand anderes aus dem Team deines Servers machen. \n \n Wenn du dich bei <@303966855452950529> oder <@502941014697181191> verifiziert hast, drücke bitte auf den :thumbsup: Emoji unter dieser Nachricht."
+ "color" 51
+ "thumbnail" (sdict "url" $avatar2) 
+ "footer" (sdict "text" "Team, diese Nachricht bitte vor dem Veröffentlichen löschen.")}}
+
+
+{{$avatar3 := (joinStr "" "https://cdn.discordapp.com/emojis/711993392879370331.png?v=1")}}
+{{$embed3 := cembed 
+ "title" "Gut Gut"
+ "description" "Dein Server scheint wohl jugendfreundlich zu sein. \n \n Sende jetzt deinen Werbetext und die Einladung. Halte dich an die Regeln aus der vorletzten Nachricht. Wenn du mit deinem Werbetext fertig bist, schreibe `-fertig` um das <@&422060086115041301> zu Benachrichtigen. Jetzt musst du nur noch ein wenig Geduld haben."
+ "color" 51
+ "thumbnail" (sdict "url" $avatar3) 
+ "footer" (sdict "text" "Team, diese Nachricht bitte vor dem Veröffentlichen löschen.")}}
+
+{{$avatar4 := (joinStr "" "https://cdn.discordapp.com/emojis/711993392879370331.png?v=1")}}
+{{$embed4 := cembed 
+ "title" "Selber überprüfen"
+ "description" "Die Selbstüberprüfung bietet den Vorteil, in den normalen Kategorien werben zu können, erfordert aber auch die folgenden Eigeschaften: \n \n <a:name:769434454762455131> Das Team deines Servers muss Mitglieder verifizieren, die Zugriff auf NSFW Inhalte haben wollen. \n <a:name:769434454762455131> Die Verifizierung geschieht durch die Vorlage eines offiziellen Dokumentes (z.B. Ausweis). \n <a:name:769434454762455131> Channel mit NSFW Inhalten dürfen nur verifizierten Mitgliedern angezeigt werden. (Durch die Vergabe einer 18+ Rolle bei der Verifizierung). \n <a:name:769434454762455131> Die Inhalte dürfen nicht durch Role Menus oder die von Discord vorgegebenen NSFW-Channeln geschehen. \n \n <a:black:721602322198954046> Wenn du mit diesen Kriterien einverstanden bist und diese auch erfüllen kannst, drücke bitte auf ▶️ \n <a:black:721602322198954046> Wenn du auf ▶️ klickst, wird ein Teammitglied benachrichtigt um zu Überprüfen, ob alle Kriterien eingehalten werden. Außerdem wird ein Hinweis auf die Selbstüberprüfung vom Assistenten gepostet, welche auch nach der Veröffentlichung des Channels bleibt. \n \n <a:black:721602322198954046> Solltest du diese Bedingungen nicht erfüllen können oder wollen, drücke auf ◀️ um dich normal bei uns zu verifizieren und in den 18+ Kategorien zu werben."
+ "color" 51
+ "thumbnail" (sdict "url" $avatar4) 
+ "footer" (sdict "text" "Team, diese Nachricht bitte vor dem Veröffentlichen löschen.")}}
+
+ 
+{{ $action := .Reaction.Emoji.Name}}
+{{ $validEmojis := cslice "👍" "👎" "🤝"}}
+{{ $isValid := false }}
+{{ with and (eq .ReactionMessage.Author.ID 204255221017214977) .ReactionMessage.Embeds }}
+    {{ $embed := index . 0 }} {{/* The first embed */}}
+    {{ if and (eq $embed.Title "Hat dein Server NSFW oder Erotik Role Play (18+ Zeug)?") $embed.Footer }}
+        {{ $isValid = true }}
+    {{ end }}
+{{ end }}
+{{ if and (in $validEmojis $action) $isValid}}
+    {{ deleteMessageReaction nil .ReactionMessage.ID .User.ID $action }}
+    {{ if eq $action "👎" }} {{sendMessage nil $embed3 }}
+    {{end}}
+    {{ if eq $action "🤝" }} {{$x2 := sendMessageRetID nil $embed4}} {{addMessageReactions nil $x2 "◀️" "▶️"}}
+    {{ else }}
+        {{ if eq $action "👍" }}
+            {{if hasRoleName "18+"}} {{sendMessage nil $embed1 }} 
+            {{ end }}
+            {{if not (hasRoleName "18+")}} {{$x := sendMessageRetID nil $embed2}} {{addMessageReactions nil $x "👍"}}
+            {{ end }}
+        {{ end }}
+    {{ end }}
+{{ end }}

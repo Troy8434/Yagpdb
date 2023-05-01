@@ -1,0 +1,13 @@
+{{/*BEWERTUNG MANUELL Made by Troy#8434*/}}
+{{$avatar := (joinStr "" "https://media.discordapp.net/attachments/861618411971543040/932040863901691914/tea.png?width=472&height=472")}}
+{{$x2 := cembed 
+ "title" (joinStr "" "Wie würdest du " .Channel.Name " bewerten?")
+ "description" " ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬ \n <:1Stern:982325237930672229> = Ein Stern = sehr schlecht \n <:2Stern:982325238018768917> = Zwei Sterne = gefällt mir nicht \n <:3Stern:982325309095411732> = Drei Sterne = mäßig \n <:4Stern:982325331207786566> = Vier Sterne = gefällt mir \n <:5Stern:982325352556789770> = Fünf Sterne = sehr gut"
+ "color" 51
+ "thumbnail" (sdict "url" $avatar) 
+ "footer" (sdict "text" "Bitte bewertet den Server fair.")}}
+
+
+{{$xy5 := sendMessageRetID nil $x2 }}
+{{addMessageReactions nil $xy5 "1Stern:982325237930672229" "2Stern:982325238018768917" "3Stern:982325309095411732" "4Stern:982325331207786566" "5Stern:982325352556789770"}}
+{{deleteTrigger 1}}

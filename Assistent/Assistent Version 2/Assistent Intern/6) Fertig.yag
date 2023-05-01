@@ -1,0 +1,42 @@
+{{$x3 := joinStr "" "<@&422060086115041301>"}}
+
+{{ $avatar := (joinStr "" "https://cdn.discordapp.com/emojis/730810055657652234.png?v=1") }}
+{{$embed := cembed 
+ "title" "Wie würdest du diesen Server bewerten?"
+ "description" " ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬ \n <:1Stern:801035186027888671> = Ein Stern = sehr schlecht \n <:2Stern:801035202246737940> = Zwei Sterne = gefällt mir nicht \n <:3Stern:801035210048798781> = Drei Sterne = mäßig \n <:4Stern:801035220710981682> = Vier Sterne = gefällt mir \n <:5Stern:801035229790863370> = Fünf Sterne = sehr gut"
+ "color" 51
+ "thumbnail" (sdict "url" $avatar) 
+ "footer" (sdict "text" "Bitte bewertet den Server fair.")}}
+
+{{$embed2 := cembed 
+ "title" "Bitte den Channel überprüfen und freischalten"
+ "color" 51
+ "footer" (sdict "text" "Hier die Nachricht für die Schnüffler triggern")}}
+
+
+{{/* 0 for per user, 1 for global */}}
+{{$isGlobal := 0}}
+{{/* name your cooldown name (anything works) */}}
+{{$name := "Fertig-Ping-Cooldown"}}
+{{/* Length of the cooldown (in seconds) */}}
+{{$lengthSec := 60}}
+
+{{/* CREATING VARIABLES DO NOT TOUCH */}}
+{{$id := 0}}
+{{$key := joinStr "" "cooldown_" $name}}
+{{if eq $isGlobal 0}}
+    {{$id = .User.ID}}
+{{end}}
+
+{{if dbGet (toInt64 $id) $key}} 
+    {{/* Code to execute when cooldown is active */}}
+{{else}}
+    {{/* Create cooldown entry */}}
+    {{dbSetExpire (toInt64 $id) $key "cooldown" $lengthSec}}
+
+    {{deleteTrigger 1}}
+    {{sendMessageNoEscape nil $x3}} 
+    {{sendMessage nil $embed2 }}
+    {{$x := sendMessageRetID nil $embed }}
+    {{addMessageReactions nil $x "1Stern:801035186027888671" "2Stern:801035202246737940" "3Stern:801035210048798781" "4Stern:801035220710981682" "5Stern:801035229790863370"}}
+{{end}}

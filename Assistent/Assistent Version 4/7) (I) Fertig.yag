@@ -1,0 +1,59 @@
+{{/*FERTIG Made by Troy#8434*/}}
+{{$x1 := cembed
+ "title" "Dieser Server bietet NSFW Inhalte."
+ "color" 51}}
+
+
+ {{/*BEWERTUNG MANUELL Made by Troy#8434*/}}
+ {{$avatar := (joinStr "" "https://media.discordapp.net/attachments/861618411971543040/932040863901691914/tea.png?width=472&height=472")}}
+ {{$x2 := cembed 
+  "title" (joinStr "" "Wie würdest du " .Channel.Name " bewerten?")
+  "description" " ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬ \n <:1Stern:982325237930672229> = Ein Stern = sehr schlecht \n <:2Stern:982325238018768917> = Zwei Sterne = gefällt mir nicht \n <:3Stern:982325309095411732> = Drei Sterne = mäßig \n <:4Stern:982325331207786566> = Vier Sterne = gefällt mir \n <:5Stern:982325352556789770> = Fünf Sterne = sehr gut"
+  "color" 51
+  "thumbnail" (sdict "url" $avatar) 
+  "footer" (sdict "text" "Bitte bewertet den Server fair.")}}
+ 
+
+
+{{$x3 := (complexMessage
+ "content" "<@&422060086115041301>"
+ "embed" (cembed 
+ "title" "Bitte den Channel überprüfen, freischalten und in #neue-server einspeisen"
+ "color" 51
+ "footer" (sdict "text" "Diese Nachricht bitte nach dem Überprüfen löschen")))}}
+
+
+{{$User := (toInt64 .User.ID)}}
+{{$key := "Fertig-Ping"}}
+{{$lengthSec := 60}}
+{{$x10 := joinStr "" "6.2) " .Channel.ID }}
+
+{{if dbGet $User $key}} 
+{{else}}
+    {{dbSetExpire $User $key "cooldown" $lengthSec}}
+    {{deleteTrigger 1}}
+    {{$x4 := sendMessageNoEscapeRetID nil $x3}}
+    {{$xy5 := sendMessageRetID nil $x2 }}
+    {{addMessageReactions nil $xy5 "1Stern:982325237930672229" "2Stern:982325238018768917" "3Stern:982325309095411732" "4Stern:982325331207786566" "5Stern:982325352556789770"}}
+    {{$x5 := joinStr "" "7) " .Channel.ID }}
+    {{$x6 := joinStr "" $x4}}
+    {{dbSetExpire (toInt64 .User.ID) $x5 $x6 604800}}
+    {{$y1 := joinStr "" "NSFW " .Channel.ID }}
+    {{if (dbGet $User $y1)}}
+        {{dbDel $User $y1}}
+        {{sendMessage nil $x1}}
+        {{$x10 = joinStr "" "6.1) " .Channel.ID }}
+    {{end}}
+{{end}}
+
+
+
+
+{{$x7 := joinStr "" "5.1) " .Channel.ID }}
+{{$x9 := (dbGet (toInt64 .User.ID) $x7).Value}}
+{{deleteMessage nil (toInt64 $x9)}}
+{{dbDel (toInt64 .User.ID) $x7}}
+
+{{$x11 := (dbGet (toInt64 .User.ID) $x10).Value}}
+{{deleteMessage nil (toInt64 $x11)}}
+{{dbDel (toInt64 .User.ID) $x10}}

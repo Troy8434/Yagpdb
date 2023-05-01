@@ -1,0 +1,37 @@
+{{/*LOTTERIE GEWINNER made by Troy#8434*/}}
+{{$global := (toInt64 0)}}
+{{$Lotterie := "active"}}
+
+{{$xy := (dbGet $global $Lotterie).Value}}
+{{if $xy}}
+    {{$x1 := randInt (len $xy)}}
+    {{$x2 := index $xy $x1}}
+    {{$x3 := joinStr "" "Und der Gewinner der Lotterie ist _trommelwirbel_ <@" $x2 "> 🎉.\nHerzlichen Glückwunsch, du hast 100.000 <:coins:721345966984396831> gewonnen."}}
+    {{sendMessage nil $x3}}
+    {{dbDel $global $Lotterie}}
+{{else}}
+    {{sendMessage nil "Hmm, anscheinend hat niemand ein Los gekauft. <:bear_think:801144709174132778>"}}
+{{end}}
+
+
+
+
+
+
+
+{{/*LOTTERIE LOSE made by Troy#8434*/}}
+{{$global := (toInt64 0)}}
+{{$Lotterie := "active"}}
+
+{{if not (dbGet $global $Lotterie)}}
+    {{$y1 := cslice .User.ID}}
+    {{dbSet $global $Lotterie $y1}}
+{{else}}
+    {{$y2 := (dbGet $global $Lotterie).Value}}
+    {{$y3 := $y2.Append .User.ID}}
+    {{dbSet $global $Lotterie $y3}}
+{{end}}
+{{$xy := (dbGet $global $Lotterie).Value}}
+{{$x7 := joinStr "" .User.Mention " Du hast dir jetzt ein (weiteres) Los für die Lotterie gekauft. Bald wirst du erfahren, wer der glückliche Gewinner ist. Bisher wurden " (len $xy) " Lose gekauft ^^"}}
+{{sendMessage nil $x7}}
+{{removeRoleID "911642830563323935"}}

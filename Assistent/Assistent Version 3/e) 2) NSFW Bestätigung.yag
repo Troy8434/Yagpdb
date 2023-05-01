@@ -1,0 +1,6 @@
+{{$x := cembed
+ "title" "Dieser Server bietet NSFW Inhalte."
+ "color" 51
+}}
+{{sendMessage nil $x}}
+{{deleteTrigger 1}}
