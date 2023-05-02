@@ -25,7 +25,7 @@
 
 
 
-{{/*Regeln Made by Troy#8434*/}}
+{{/*Reaction Made by Troy#8434*/}}
 {{$action := .Reaction.Emoji.Name}}
 {{$validEmojis := cslice "✅"}}
 {{$isValid := true }}
