@@ -29,8 +29,10 @@
 {{$action := .Reaction.Emoji.Name}}
 {{$validEmojis := cslice "✅"}}
 {{$isValid := true }}
-{{$msg := joinStr "" "Willkommen <@" .User.ID "> ^^"}}    
-{{$var := randInt 1 100}}
+{{$msg := joinStr "" "Willkommen <@" .User.ID "> ^^"}} 
+{{$role_id := 865606811810004993 }}
+{{$main_channel_id := 865317544428699668 }}
+
 
 
 {{with and (eq .ReactionMessage.Author.ID 204255221017214977) .ReactionMessage.Embeds}}
@@ -39,10 +41,10 @@
     
 {{if and (in $validEmojis $action) $isValid}}
     {{if eq $action "✅"}}
-        {{if not (hasRoleID 865606811810004993)}}
-            {{addRoleID 865606811810004993}}
+        {{if not (hasRoleID $role_id)}}
+            {{addRoleID $role_id}}
             {{sleep 2}}
-            {{sendMessage 865317544428699668 $msg}}
+            {{sendMessage $main_channel_id $msg}}
         {{end}}
     {{end}}
 {{end}}
