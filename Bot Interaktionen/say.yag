@@ -1,10 +1,9 @@
 {{$isGlobal := 0}}
-{{$name := "Say"}}
 {{$lengthSec := 3600}}
 
 
 {{$id := 0}}
-{{$key := joinStr "" "cooldown_" $name}}
+{{$key := joinStr "" "cooldown_say"}}
 {{if eq $isGlobal 0}}
     {{$id = .User.ID}}
 {{end}}
