@@ -253,7 +253,6 @@
         "image" (sdict "url" $gif)}}
         {{sendMessage nil $embed1}}
         {{deleteTrigger 1}}
-        {{removeRoleID "916798950554632212"}}
     {{end}}
 {{else}}
     {{sendMessage nil $M}}
