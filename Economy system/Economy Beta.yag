@@ -96,52 +96,23 @@
 
 
 
-{{/*WITH Made by Troy#8434*/}}
-if arg 1 eq "all" --> getdb und with alles
+{{/*WITH*/}}
+if arg 1 eq "all" --> getdb und with alles.
+Eigentlch so wie Dep, nur noch Pocket und Bank tauschen?
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-{{/*MÜNZWURF Made by Troy#8434*/}}
+{{/*MÜNZWURF*/}}
 49 Chance auf Kopf, 49 Chance auf Zahl, 1 Chance, dass die Münze auf der Kante Landet, 1 Chance, dass die Münze vom Tisch fliegt
 
-{{/*SHOP Made by Troy#8434*/}}
- EInfach nur Embed mit den Verschiedenen Items
+{{/*SHOP*/}}
+Einfaches Embed listed nur die Items auf.
 
-{{/*BUY Made by Troy#8434*/}}
-Für Event Items auf jedenfall Einzelne Commands --> -buy Item1
+{{/*BUY*/}}
+Für Event Items auf jedenfall einzelne Commands --> -buy Item1
 
-
-{{/*CRIME Made by Troy#8434*/}}
+{{/*CRIME*/}}
 - randInt für Amount und noch eine RandInt um zu gucken ob Minus oder +. Cooldown 4h
 
-{{/*ROB Made by Troy#8434*/}}
+{{/*ROB*/}}
 - randInt mit Chance erwischt zu werden. RandInt mit Strafgeld oder Prozentmäßig?
 
 

@@ -34,4 +34,3 @@
 {{$xy := (dbGet $global $Lotterie).Value}}
 {{$x7 := joinStr "" .User.Mention " Du hast dir jetzt ein (weiteres) Los für die Lotterie gekauft. Bald wirst du erfahren, wer der glückliche Gewinner ist. Bisher wurden " (len $xy) " Lose gekauft ^^"}}
 {{sendMessage nil $x7}}
-{{removeRoleID "911642830563323935"}}
