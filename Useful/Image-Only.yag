@@ -9,4 +9,4 @@
 {{if not $media}}
     {{deleteTrigger 0}}
 {{end}} 
-{{addReactions "👍" ":shrugging:720630876865822910" "👎"}}
+{{addReactions "👍" "🤷‍♂️" "👎"}}

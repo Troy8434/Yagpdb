@@ -1,8 +1,0 @@
-{{$avatar := (joinStr "" "https://cdn.discordapp.com/avatars/" (toString .User.ID) "/" .User.Avatar ".png")}}
-{{$embed := cembed
- "title" "Information"
- "description" "Please state the needed Information below. You can read which information is needed in the Information Channel, from where you opened the Ticket. \n\n **The following Commands might be useful** \n Use **-ticket close (reason)** if you want to close the Ticket again in Chase all Problems are solved. \n Use **-tickets AdminsOnly** if you want to talk with an Admin about the Behavior of one of our Mods or Managers. \n Use **-tickets adduser (@User)** if you need to add another User in Chase of a Conflict or something else."
- "color" 4645612
- "thumbnail" (sdict "url" $avatar) 
-}}
-{{ sendMessage nil $embed}}
