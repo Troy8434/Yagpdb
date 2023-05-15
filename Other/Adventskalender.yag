@@ -14,53 +14,53 @@
     {{sendMessage nil "Dieses Türchen hast du schon geöffnet 🥺"}}
 {{else}}
     {{if eq $x1 1}}
-        {{$bild = "https://media.discordapp.net/attachments/894188326259654716/915328630991757352/Screenshot_20211121-150900_Instagram.jpg?width=470&height=472"}}
+        {{$bild = "https://media.discordapp.net/attachments/861618411971543040/973631398185410570/unknown.png?width=564&height=637"}}
     {{else if eq $x1 2}}
-        {{$bild = "https://media.discordapp.net/attachments/894188326259654716/915328532744384654/Screenshot_20211130-204552_Instagram.jpg?width=479&height=473"}}
+        {{$bild = "https://media.discordapp.net/attachments/861618411971543040/973631398185410570/unknown.png?width=564&height=637"}}
     {{else if eq $x1 3}}
-        {{$bild = "https://media.discordapp.net/attachments/894188326259654716/915328532345917480/Screenshot_20211130-204649_Instagram.jpg?width=467&height=472"}}
+        {{$bild = "https://media.discordapp.net/attachments/861618411971543040/973631398185410570/unknown.png?width=564&height=637"}}
     {{else if eq $x1 4}}
-        {{$bild = "https://media.discordapp.net/attachments/894188326259654716/911998332031893524/DZjTykDU0AAmwh-.png?width=472&height=472"}}
+        {{$bild = "https://media.discordapp.net/attachments/861618411971543040/973631398185410570/unknown.png?width=564&height=637"}}
     {{else if eq $x1 5}}
-        {{$bild = "https://media.discordapp.net/attachments/894188326259654716/915328628324171836/Screenshot_20211121-151211_Instagram.jpg?width=473&height=473"}}
+        {{$bild = "https://media.discordapp.net/attachments/861618411971543040/973631398185410570/unknown.png?width=564&height=637"}}
     {{else if eq $x1 6}}
-        {{$bild = "https://media.discordapp.net/attachments/894188326259654716/915328627716010024/Screenshot_20211121-153806_Instagram.jpg?width=475&height=473"}}
+        {{$bild = "https://media.discordapp.net/attachments/861618411971543040/973631398185410570/unknown.png?width=564&height=637"}}
     {{else if eq $x1 7}}
-        {{$bild = "https://media.discordapp.net/attachments/894188326259654716/915332702994071613/Screenshot_20211130-210315_Instagram.jpg?width=372&height=473"}}
+        {{$bild = "https://media.discordapp.net/attachments/861618411971543040/973631398185410570/unknown.png?width=564&height=637"}}
     {{else if eq $x1 8}}
-        {{$bild = "https://media.discordapp.net/attachments/894188326259654716/915328628529717328/Screenshot_20211121-151128_Instagram.jpg?width=258&height=472"}}
+        {{$bild = "https://media.discordapp.net/attachments/861618411971543040/973631398185410570/unknown.png?width=564&height=637"}}
     {{else if eq $x1 9}}
-        {{$bild = "https://media.discordapp.net/attachments/894188326259654716/915328532924747866/Screenshot_20211130-204458_Instagram.jpg?width=467&height=472"}}
+        {{$bild = "https://media.discordapp.net/attachments/861618411971543040/973631398185410570/unknown.png?width=564&height=637"}}
     {{else if eq $x1 10}}
-        {{$bild = "https://media.discordapp.net/attachments/894188326259654716/915328532547268679/Screenshot_20211130-204622_Instagram.jpg?width=546&height=391"}}
+        {{$bild = "https://media.discordapp.net/attachments/861618411971543040/973631398185410570/unknown.png?width=564&height=637"}}
     {{else if eq $x1 11}}
-        {{$bild = "https://media.discordapp.net/attachments/894190147199959071/915338892041941093/give-me-attention-notice-me.gif?width=448&height=393"}}
+        {{$bild = "https://media.discordapp.net/attachments/861618411971543040/973631398185410570/unknown.png?width=564&height=637"}}
     {{else if eq $x1 12}}
-        {{$bild = "https://media.discordapp.net/attachments/894188326259654716/915332703505747978/Screenshot_20211130-205857_Instagram.jpg?width=424&height=473"}}
+        {{$bild = "https://media.discordapp.net/attachments/861618411971543040/973631398185410570/unknown.png?width=564&height=637"}}
     {{else if eq $x1 13}}
-        {{$bild = "https://media.discordapp.net/attachments/894188326259654716/915328629175631932/Screenshot_20211121-150927_Instagram.jpg?width=603&height=472"}}
+        {{$bild = "https://media.discordapp.net/attachments/861618411971543040/973631398185410570/unknown.png?width=564&height=637"}}
     {{else if eq $x1 14}}
-        {{$bild = "https://media.discordapp.net/attachments/894188326259654716/915328627913150464/Screenshot_20211121-151409_Instagram.jpg?width=471&height=473"}}
+        {{$bild = "https://media.discordapp.net/attachments/861618411971543040/973631398185410570/unknown.png?width=564&height=637"}}
     {{else if eq $x1 15}}
-        {{$bild = "https://images-ext-1.discordapp.net/external/4uXWmp5rgsOucd0NganK1TzS1QcrrR4eZEN-qK0_lUw/%3Fwidth%3D630%26height%3D472/https/media.discordapp.net/attachments/894188326259654716/911998332853964800/roofat_1080px__uc_2_1.gif?width=567&height=425"}}
+        {{$bild = "https://media.discordapp.net/attachments/861618411971543040/973631398185410570/unknown.png?width=564&height=637"}}
     {{else if eq $x1 16}}
-        {{$bild = "https://media.discordapp.net/attachments/894188326259654716/915328628127072288/Screenshot_20211121-151320_Instagram.jpg?width=459&height=472"}}
+        {{$bild = "https://media.discordapp.net/attachments/861618411971543040/973631398185410570/unknown.png?width=564&height=637"}}
     {{else if eq $x1 17}}
-        {{$bild = "https://media.discordapp.net/attachments/894188326259654716/915332703287664680/Screenshot_20211130-210120_Instagram.jpg?width=472&height=472"}}
+        {{$bild = "https://media.discordapp.net/attachments/861618411971543040/973631398185410570/unknown.png?width=564&height=637"}}
     {{else if eq $x1 18}}
-        {{$bild = "https://preview.redd.it/05wdih11xj081.gif?overlay-align=bottom,left&crop=528:276.439790576,smart&overlay-height=15p&overlay=%2Fwatermark%2Ft5_2qjpg.png%3Fs%3D616eb5c20a077ba915657a8fe4403016c9c16db1&width=528&height=276.439790576&s=0d296168136650e89c241efcbac0e7db859e8d9a"}}
+        {{$bild = "https://media.discordapp.net/attachments/861618411971543040/973631398185410570/unknown.png?width=564&height=637"}}
     {{else if eq $x1 19}}
-        {{$bild = "https://media.discordapp.net/attachments/894188326259654716/911998331780218991/DbpHSadUwAA0Q8P.png?width=472&height=472"}}
+        {{$bild = "https://media.discordapp.net/attachments/861618411971543040/973631398185410570/unknown.png?width=564&height=637"}}
     {{else if eq $x1 20}}
-        {{$bild = "https://media.discordapp.net/attachments/894190147199959071/915341166424248330/milkmocha-milkmocha-walk.gif?width=448&height=448"}}
+        {{$bild = "https://media.discordapp.net/attachments/861618411971543040/973631398185410570/unknown.png?width=564&height=637"}}
     {{else if eq $x1 21}}
-        {{$bild = "https://media.discordapp.net/attachments/894188326259654716/911998332447109120/EF6f__mXoAAlNNb.png?width=403&height=403"}}
+        {{$bild = "https://media.discordapp.net/attachments/861618411971543040/973631398185410570/unknown.png?width=564&height=637"}}
     {{else if eq $x1 22}}
-        {{$bild = "https://media.discordapp.net/attachments/894190147199959071/915341315439493230/milk-mocha.gif?width=324&height=216"}}
+        {{$bild = "https://media.discordapp.net/attachments/861618411971543040/973631398185410570/unknown.png?width=564&height=637"}}
     {{else if eq $x1 23}}
-        {{$bild = "https://media.discordapp.net/attachments/894188326259654716/915332703770013796/Screenshot_20211130-205744_Instagram.jpg?width=477&height=472"}}
+        {{$bild = "https://media.discordapp.net/attachments/861618411971543040/973631398185410570/unknown.png?width=564&height=637"}}
     {{else}}
-        {{$bild = "https://media.discordapp.net/attachments/894188326259654716/915328627502104616/Screenshot_20211121-154110_Instagram.jpg?width=472&height=473"}}
+        {{$bild = "https://media.discordapp.net/attachments/861618411971543040/973631398185410570/unknown.png?width=564&height=637"}}
     {{end}}
     {{$embed := cembed 
         "title" (joinStr "" "Dies ist das " ($x1) ". Türchen ^^")
@@ -72,7 +72,7 @@
 
 
 
-
+{{/*ADVENT COUNTER made by Troy#8434*/}}
 {{$User := (toInt64 0)}}
 {{$key := "Day"}}
 {{$name := "on/off"}}
