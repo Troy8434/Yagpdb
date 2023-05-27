@@ -1,0 +1,7 @@
+This repository comprises most of my codes for the Custom Commands of the YAGPDB Bot. 
+Most of the documentation will be in <b>German</b> since most of the codes were used on german Servers. However, there are also cases like the Bump Reminder which got <b>englisch Documentation</b>.
+I startet to Code within the custom commands of yag in early 2020 and got many questions regarding the codes along the way, so I decided to upload most of them to a respository in order for others to learn / use them. Btw. You are allowed to use them, but some Credit would be nice ;). Some of the used Emoji like the Lexicat ones belong to the Server: <b>Das Discord Server Lexikon<b>. Since they're only created for this server, they're copyrighted.
+To keep it simple, we'll use the prefix <b>-</b> in the example commands.
+If you got any questions regarding these Commands (especially in case I didn't cover them well enough in their respective Readme files.) you can DM me on Discord.
+
+You are more than welcome to check out my current main project: <a href="https://top.gg/bot/949729221079621652">Cookie King</a>, which is a fun german economy bot about cookies. Btw. this project also started as a bunch of custom commands within yagpdb
